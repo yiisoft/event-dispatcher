@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "yii\\eventDispatcher\\": "src"
+            "Yii\\EventDispatcher\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "yii\\eventDispatcher\\tests\\": "tests"
+            "Yii\\EventDispatcher\\Tests\\": "tests"
         }
     },
     "extra": {
