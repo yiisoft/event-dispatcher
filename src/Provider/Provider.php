@@ -3,14 +3,12 @@ namespace Yii\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 
-class ByInterface implements ListenerProviderInterface
+class Provider implements ListenerProviderInterface
 {
     private $listeners = [];
 
     public function getListenersForEvent(object $event): iterable
     {
-        // TODO: implement wildcards?
-
         $className = get_class($event);
         if (isset($this->listeners[$className])) {
             return $this->listeners[$className];
