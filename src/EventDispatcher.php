@@ -20,7 +20,7 @@ class EventDispatcher implements EventDispatcherInterface
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 return $event;
             }
-            $event = $listener($event);
+            $listener($event);
         }
 
         return $event;
