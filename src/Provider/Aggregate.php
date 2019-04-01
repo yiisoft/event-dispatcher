@@ -3,7 +3,7 @@ namespace Yii\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 
-class Aggregate implements ListenerProviderInterface
+final class Aggregate implements ListenerProviderInterface
 {
     /**
      * @var ListenerProviderInterface[]
