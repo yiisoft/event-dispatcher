@@ -7,7 +7,7 @@ use Yii\EventDispatcher\Provider\Aggregate;
 
 class AggregateTest extends TestCase
 {
-    public function test(): void
+    public function testProvidesAllListeners(): void
     {
         $event = new class {
             public $listeners = [];
