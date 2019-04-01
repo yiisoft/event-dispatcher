@@ -29,8 +29,8 @@ class AggregateTest extends TestCase
 
         $aggregate = new Aggregate();
 
-        $aggregate->addProvider($provider1);
-        $aggregate->addProvider($provider2);
+        $aggregate->attach($provider1);
+        $aggregate->attach($provider2);
 
         foreach ($aggregate->getListenersForEvent($event) as $listener) {
             $listener($event);
