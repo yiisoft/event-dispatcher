@@ -1,8 +1,13 @@
 <?php
+
 namespace Yii\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 
+/**
+ * Aggregate is a listener provider that allows combining
+ * multiple listener providers.
+ */
 final class Aggregate implements ListenerProviderInterface
 {
     /**
@@ -17,8 +22,13 @@ final class Aggregate implements ListenerProviderInterface
         }
     }
 
-   public function attach(ListenerProviderInterface $provider): void
-   {
-       $this->providers[] = $provider;
-   }
+    /**
+     * Adds provider as a source for event listeners
+     *
+     * @param ListenerProviderInterface $provider
+     */
+    public function attach(ListenerProviderInterface $provider): void
+    {
+        $this->providers[] = $provider;
+    }
 }

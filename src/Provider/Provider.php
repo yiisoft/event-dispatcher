@@ -3,6 +3,10 @@ namespace Yii\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 
+/**
+ * Provider is a listener provider that registers event listeners for interfaces used in callable type-hints
+ * and gives out a list of handlers by event interface provided for further use with Dispatcher.
+ */
 final class Provider implements ListenerProviderInterface
 {
     private $listeners = [];
@@ -29,11 +33,29 @@ final class Provider implements ListenerProviderInterface
         return [];
     }
 
+    /**
+     * Attaches listener to corresponding event based on the type-hint used for the event argument.
+     *
+     * Method signature should be the following:
+     *
+     * ```
+     *  function (MyEvent $event): void
+     * ```
+     *
+     * Any callable could be used be it a closure, invokable object or array referencing a class or object.
+     *
+     * @param callable $listener
+     */
     public function attach(callable $listener): void
     {
         $this->listeners[$this->getParameterType($listener)][] = $listener;
     }
 
+    /**
+     * Detach all event handlers registered for an interface
+     *
+     * @param string $interface
+     */
     public function detach(string $interface): void
     {
         unset($this->listeners[$interface]);
@@ -42,10 +64,8 @@ final class Provider implements ListenerProviderInterface
     /**
      * Derives the class type of the first argument of a callable.
      *
-     * @param callable $callable
-     *   The callable for which we want the parameter type.
-     * @return string
-     *   The class the parameter is type hinted on.
+     * @param callable $callable The callable for which we want the parameter type.
+     * @return string The class the parameter is type hinted on.
      */
     private function getParameterType($callable): string
     {
@@ -76,7 +96,7 @@ final class Provider implements ListenerProviderInterface
             }
 
             $rType = $params[0]->getType();
-            if ($rType == null) {
+            if ($rType === null) {
                 throw new \InvalidArgumentException('Listeners must declare an object type they can accept.');
             }
             $type = $rType->getName();

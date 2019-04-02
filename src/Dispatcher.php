@@ -5,6 +5,10 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
+/**
+ * Dispatcher executes listeners attached to event passed
+ * @see https://www.php-fig.org/psr/psr-14/
+ */
 final class Dispatcher implements EventDispatcherInterface
 {
     private $listenerProvider;
