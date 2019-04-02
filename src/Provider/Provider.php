@@ -73,7 +73,6 @@ final class Provider implements ListenerProviderInterface
                     break;
                 default:
                     throw new \InvalidArgumentException('Not a recognized type of callable');
-                    break;
             }
 
             $rType = $params[0]->getType();
