@@ -4,7 +4,7 @@
 namespace Yii\EventDispatcher\Tests;
 
 
-class InvokeableEventListener
+class InvokableEventListener
 {
     public function __invoke(CustomEvent $event)
     {
