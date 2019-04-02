@@ -1,67 +1,65 @@
 <?php
+
 namespace Yii\EventDispatcher\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use Psr\EventDispatcher\StoppableEventInterface;
 use Yii\EventDispatcher\Dispatcher;
+use Yii\EventDispatcher\Tests\Event\Event;
+use Yii\EventDispatcher\Tests\Event\StoppableEvent;
 
 class DispatcherTest extends TestCase
 {
     public function testCallsAllListeners()
     {
-        $event = new class {
-            public $listeners = [];
-        };
+        $event = new Event();
 
-        $provider = new class implements ListenerProviderInterface {
+        $provider = new class implements ListenerProviderInterface
+        {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function ($event) { $event->listeners[] = 1; };
-                yield function ($event) { $event->listeners[] = 2; };
-                yield function ($event) { $event->listeners[] = 3; };
+                yield function (Event $event) {
+                    $event->register(1);
+                };
+                yield function (Event $event) {
+                    $event->register(2);
+                };
+                yield function (Event $event) {
+                    $event->register(3);
+                };
             }
         };
 
         $dispatcher = new Dispatcher($provider);
         $dispatcher->dispatch($event);
 
-        $this->assertEquals([1, 2, 3], $event->listeners);
+        $this->assertEquals([1, 2, 3], $event->registered());
     }
 
     public function testPropagationStops()
     {
-        $event = new class implements StoppableEventInterface {
-            public $listeners = [];
+        $event = new StoppableEvent();
 
-            private $isPropagationStopped = false;
-
-            public function isPropagationStopped(): bool
-            {
-                return $this->isPropagationStopped;
-            }
-
-            public function stopPropagation(): void
-            {
-                $this->isPropagationStopped = true;
-            }
-        };
-
-        $provider = new class implements ListenerProviderInterface {
+        $provider = new class implements ListenerProviderInterface
+        {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function ($event) {
-                    $event->listeners[] = 1;
-                    $event->stopPropagation();
+                yield function (StoppableEvent $event) {
+                    $event->register(1);
+                    $event->stopPropogation();
                 };
-                yield function ($event) { $event->listeners[] = 2; };
-                yield function ($event) { $event->listeners[] = 3; };
+                yield function (StoppableEvent $event) {
+                    $event->register(2);
+                };
+                yield function (StoppableEvent $event) {
+                    $event->register(3);
+                };
             }
         };
 
         $dispatcher = new Dispatcher($provider);
         $dispatcher->dispatch($event);
 
-        $this->assertEquals([1], $event->listeners);
+        $this->assertEquals([1], $event->registered());
     }
 }

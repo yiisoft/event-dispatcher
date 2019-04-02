@@ -1,29 +1,35 @@
 <?php
+
 namespace Yii\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Yii\EventDispatcher\Provider\Aggregate;
+use Yii\EventDispatcher\Tests\Event\Event;
 
 class AggregateTest extends TestCase
 {
     public function testProvidesAllListeners(): void
     {
-        $event = new class {
-            public $listeners = [];
-        };
+        $event = new Event();
 
-        $provider1 = new class implements ListenerProviderInterface {
+        $provider1 = new class implements ListenerProviderInterface
+        {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function ($event) { $event->listeners[] = 1; };
+                yield function (Event $event) {
+                    $event->register(1);
+                };
             }
         };
 
-        $provider2 = new class implements ListenerProviderInterface {
+        $provider2 = new class implements ListenerProviderInterface
+        {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function ($event) { $event->listeners[] = 2; };
+                yield function (Event $event) {
+                    $event->register(2);
+                };
             }
         };
 
@@ -35,6 +41,6 @@ class AggregateTest extends TestCase
         foreach ($aggregate->getListenersForEvent($event) as $listener) {
             $listener($event);
         }
-        $this->assertEquals([1, 2], $event->listeners);
+        $this->assertEquals([1, 2], $event->registered());
     }
 }
