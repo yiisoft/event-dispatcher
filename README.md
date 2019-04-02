@@ -67,7 +67,7 @@ class BusyEvent implements Psr\EventDispatcher\StoppableEventInterface
 ```
 
 This way we can ensure that only first event listener will be able to handle the event. Another option is
-to allow stopping propogation in one of the listeners by providing corresponding event method.
+to allow stopping propagation in one of the listeners by providing corresponding event method.
 
 ## Events hierarchy
 
