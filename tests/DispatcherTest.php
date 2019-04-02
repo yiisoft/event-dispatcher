@@ -29,21 +29,21 @@ class DispatcherTest extends TestCase
         $this->assertEquals([1, 2, 3], $event->listeners);
     }
 
-    public function testPropogationStops()
+    public function testPropagationStops()
     {
         $event = new class implements StoppableEventInterface {
             public $listeners = [];
 
-            private $isPropogationStopped = false;
+            private $isPropagationStopped = false;
 
             public function isPropagationStopped(): bool
             {
-                return $this->isPropogationStopped;
+                return $this->isPropagationStopped;
             }
 
-            public function stopPropogation(): void
+            public function stopPropagation(): void
             {
-                $this->isPropogationStopped = true;
+                $this->isPropagationStopped = true;
             }
         };
 
@@ -52,7 +52,7 @@ class DispatcherTest extends TestCase
             {
                 yield function ($event) {
                     $event->listeners[] = 1;
-                    $event->stopPropogation();
+                    $event->stopPropagation();
                 };
                 yield function ($event) { $event->listeners[] = 2; };
                 yield function ($event) { $event->listeners[] = 3; };
