@@ -46,7 +46,7 @@ class DispatcherTest extends TestCase
             {
                 yield function (StoppableEvent $event) {
                     $event->register(1);
-                    $event->stopPropogation();
+                    $event->stopPropagation();
                 };
                 yield function (StoppableEvent $event) {
                     $event->register(2);

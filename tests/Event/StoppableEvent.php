@@ -5,15 +5,15 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 class StoppableEvent extends Event implements StoppableEventInterface
 {
-    private $isPropogationStopped = false;
+    private $isPropagationStopped = false;
 
     public function isPropagationStopped(): bool
     {
-        return $this->isPropogationStopped;
+        return $this->isPropagationStopped;
     }
 
-    public function stopPropogation()
+    public function stopPropagation()
     {
-        $this->isPropogationStopped = true;
+        $this->isPropagationStopped = true;
     }
 }
