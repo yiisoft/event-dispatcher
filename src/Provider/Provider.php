@@ -62,15 +62,13 @@ final class Provider implements ListenerProviderInterface
     }
 
     /**
-     * Derives the class type of the first argument of a callable.
+     * Derives the interface type of the first argument of a callable.
      *
      * @param callable $callable The callable for which we want the parameter type.
-     * @return string The class the parameter is type hinted on.
+     * @return string The interface the parameter is type hinted on.
      */
-    private function getParameterType($callable): string
+    private function getParameterType(callable $callable): string
     {
-        // We can't type hint $callable as it could be an array, and arrays are not callable. Sometimes. Bah, PHP.
-
         // This try-catch is only here to keep OCD linters happy about uncaught reflection exceptions.
         try {
             switch (true) {
@@ -149,7 +147,7 @@ final class Provider implements ListenerProviderInterface
      */
     private function isObjectCallable(callable $callable): bool
     {
-        return (is_array($callable) && is_object($callable[0]));
+        return is_array($callable) && is_object($callable[0]);
     }
 
     /**
@@ -170,6 +168,6 @@ final class Provider implements ListenerProviderInterface
      */
     private function isClassCallable($callable): bool
     {
-        return (is_array($callable) && is_string($callable[0]) && class_exists($callable[0]));
+        return is_array($callable) && is_string($callable[0]) && class_exists($callable[0]);
     }
 }
