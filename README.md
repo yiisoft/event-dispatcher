@@ -44,7 +44,7 @@ class DocumentProcessor
 {
     public function process(Document $document)
     {
-        // process the docuemnt
+        // process the document
         $dispatcher->dispatch(new AfterDocumentProcessed($document));
     }
 }
