@@ -18,7 +18,7 @@ final class Provider implements ListenerProviderInterface
             yield from $this->listeners[$className];
         }
 
-        foreach (array_reverse(class_parents($event)) as $parent) {
+        foreach (class_parents($event) as $parent) {
             if (isset($this->listeners[$parent])) {
                 yield from $this->listeners[$parent];
             }
