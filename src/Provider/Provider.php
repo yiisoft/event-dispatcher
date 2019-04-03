@@ -93,11 +93,11 @@ final class Provider implements ListenerProviderInterface
                     throw new \InvalidArgumentException('Not a recognized type of callable');
             }
 
-            $rType = $params[0]->getType();
-            if ($rType === null) {
+            $reflectedType = $params[0]->getType();
+            if ($reflectedType === null) {
                 throw new \InvalidArgumentException('Listeners must declare an object type they can accept.');
             }
-            $type = $rType->getName();
+            $type = $reflectedType->getName();
         } catch (\ReflectionException $e) {
             throw new \RuntimeException('Type error registering listener.', 0, $e);
         }
