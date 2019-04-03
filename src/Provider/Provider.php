@@ -15,22 +15,20 @@ final class Provider implements ListenerProviderInterface
     {
         $className = get_class($event);
         if (isset($this->listeners[$className])) {
-            return $this->listeners[$className];
+            yield from $this->listeners[$className];
         }
 
-        foreach (class_parents($event) as $parent) {
+        foreach (array_reverse(class_parents($event)) as $parent) {
             if (isset($this->listeners[$parent])) {
-                return $this->listeners[$parent];
+                yield from $this->listeners[$parent];
             }
         }
 
         foreach (class_implements($event) as $interface) {
             if (isset($this->listeners[$interface])) {
-                return $this->listeners[$interface];
+                yield from $this->listeners[$interface];
             }
         }
-
-        return [];
     }
 
     /**
