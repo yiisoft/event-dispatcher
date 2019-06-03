@@ -39,7 +39,7 @@
         "psr-4": {
             "Yiisoft\\EventDispatcher\\Tests\\": "tests"
         }
-    },v
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
