@@ -1,8 +1,5 @@
 <?php
-
-
-namespace Yii\EventDispatcher\Tests\Event;
-
+namespace Yiisoft\EventDispatcher\Tests\Event;
 
 class ClassItself extends ParentClass implements ClassInterface
 {

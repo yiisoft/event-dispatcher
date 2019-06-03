@@ -1,11 +1,10 @@
 <?php
-
-namespace Yii\EventDispatcher\Tests\Provider;
+namespace Yiisoft\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use Yii\EventDispatcher\Provider\Aggregate;
-use Yii\EventDispatcher\Tests\Event\Event;
+use Yiisoft\EventDispatcher\Provider\Aggregate;
+use Yiisoft\EventDispatcher\Tests\Event\Event;
 
 class AggregateTest extends TestCase
 {

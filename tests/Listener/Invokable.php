@@ -1,7 +1,7 @@
 <?php
-namespace Yii\EventDispatcher\Tests\Listener;
+namespace Yiisoft\EventDispatcher\Tests\Listener;
 
-use Yii\EventDispatcher\Tests\Event\Event;
+use Yiisoft\EventDispatcher\Tests\Event\Event;
 
 class Invokable
 {

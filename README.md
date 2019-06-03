@@ -27,8 +27,8 @@ The library consists of two parts: event dispatcher and event listener provider.
 for a certain event type. Dispatcher's job is to take an event, get a listeners for it from a provider and call them sequentially.
 
 ```php
-$provider = new Yii\EventDispatcher\Provider\Provider();
-$dispatcher = new Yii\EventDispatcher\Dispatcher($provider);
+$provider = new Yiisoft\EventDispatcher\Provider\Provider();
+$dispatcher = new Yiisoft\EventDispatcher\Dispatcher($provider);
 
 // adding some listeners
 $provider->attach(function (AfterDocumentProcessed $event) {
@@ -102,8 +102,8 @@ $provider->attach(function (DocumentEvent $event) {
 In case you want to combine multiple listener providers, you can use `Aggregate`:
 
 ```php
-$aggregate = new Yii\EventDispatcher\Provider\Aggregate();
-$provider1 = new Yii\EventDispatcher\Provider\Provider();
+$aggregate = new Yiisoft\EventDispatcher\Provider\Aggregate();
+$provider1 = new Yiisoft\EventDispatcher\Provider\Provider();
 $aggregate->attach($provider1);
 $aggregate->attach(new class implements ListenerProviderInterface {
     public function getListenersForEvent(object $event): iterable
@@ -114,7 +114,7 @@ $aggregate->attach(new class implements ListenerProviderInterface {
     }
 });
 
-$dispatcher = new Yii\EventDispatcher\Dispatcher($aggregate);
+$dispatcher = new Yiisoft\EventDispatcher\Dispatcher($aggregate);
 ```
 
 ## Credits

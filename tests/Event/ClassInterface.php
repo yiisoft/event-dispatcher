@@ -1,8 +1,5 @@
 <?php
-
-
-namespace Yii\EventDispatcher\Tests\Event;
-
+namespace Yiisoft\EventDispatcher\Tests\Event;
 
 interface ClassInterface
 {

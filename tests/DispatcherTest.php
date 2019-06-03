@@ -1,12 +1,11 @@
 <?php
-
-namespace Yii\EventDispatcher\Tests;
+namespace Yiisoft\EventDispatcher\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use Yii\EventDispatcher\Dispatcher;
-use Yii\EventDispatcher\Tests\Event\Event;
-use Yii\EventDispatcher\Tests\Event\StoppableEvent;
+use Yiisoft\EventDispatcher\Dispatcher;
+use Yiisoft\EventDispatcher\Tests\Event\Event;
+use Yiisoft\EventDispatcher\Tests\Event\StoppableEvent;
 
 class DispatcherTest extends TestCase
 {

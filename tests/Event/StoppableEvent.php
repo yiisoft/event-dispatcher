@@ -1,5 +1,5 @@
 <?php
-namespace Yii\EventDispatcher\Tests\Event;
+namespace Yiisoft\EventDispatcher\Tests\Event;
 
 use Psr\EventDispatcher\StoppableEventInterface;
 

@@ -1,17 +1,16 @@
 <?php
-
-namespace Yii\EventDispatcher\Tests\Provider;
+namespace Yiisoft\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
-use Yii\EventDispatcher\Provider\Provider;
-use Yii\EventDispatcher\Tests\Event\ClassItself;
-use Yii\EventDispatcher\Tests\Event\Event;
-use Yii\EventDispatcher\Tests\Event\ParentClass;
-use Yii\EventDispatcher\Tests\Event\ParentInterface;
-use Yii\EventDispatcher\Tests\Event\ClassInterface;
-use Yii\EventDispatcher\Tests\Listener\Invokable;
-use Yii\EventDispatcher\Tests\Listener\NonStatic;
-use Yii\EventDispatcher\Tests\Listener\WithStaticMethod;
+use Yiisoft\EventDispatcher\Provider\Provider;
+use Yiisoft\EventDispatcher\Tests\Event\ClassItself;
+use Yiisoft\EventDispatcher\Tests\Event\Event;
+use Yiisoft\EventDispatcher\Tests\Event\ParentClass;
+use Yiisoft\EventDispatcher\Tests\Event\ParentInterface;
+use Yiisoft\EventDispatcher\Tests\Event\ClassInterface;
+use Yiisoft\EventDispatcher\Tests\Listener\Invokable;
+use Yiisoft\EventDispatcher\Tests\Listener\NonStatic;
+use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
 
 class ProviderTest extends TestCase
 {
@@ -27,7 +26,7 @@ class ProviderTest extends TestCase
     public function testAttachCallableFunction()
     {
         $provider = new Provider();
-        $provider->attach('Yii\EventDispatcher\Tests\Provider\handle');
+        $provider->attach('Yiisoft\EventDispatcher\Tests\Provider\handle');
 
         $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);

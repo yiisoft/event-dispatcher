@@ -32,14 +32,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Yii\\EventDispatcher\\": "src"
+            "Yiisoft\\EventDispatcher\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yii\\EventDispatcher\\Tests\\": "tests"
+            "Yiisoft\\EventDispatcher\\Tests\\": "tests"
         }
-    },
+    },v
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
