@@ -2,7 +2,11 @@
     "name": "yiisoft/event-dispatcher",
     "type": "library",
     "description": "Yii Event Dispatcher",
-    "keywords": ["event", "event dispatcher","psr-14"],
+    "keywords": [
+        "event",
+        "event dispatcher",
+        "psr-14"
+    ],
     "homepage": "http://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
@@ -36,5 +40,8 @@
         "branch-alias": {
             "dev-master": "3.0.x-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
