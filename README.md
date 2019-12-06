@@ -11,7 +11,7 @@ to events dispatched.
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/event-dispatcher/v/stable.png)](https://packagist.org/packages/yiisoft/event-dispatcher)
 [![Total Downloads](https://poser.pugx.org/yiisoft/event-dispatcher/downloads.png)](https://packagist.org/packages/yiisoft/event-dispatcher)
-[![Build Status](https://travis-ci.org/yiisoft/event-dispatcher.svg?branch=master)](https://travis-ci.org/yiisoft/event-dispatcher)
+[![Build Status](https://travis-ci.com/yiisoft/event-dispatcher.svg?branch=master)](https://travis-ci.com/yiisoft/event-dispatcher)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/event-dispatcher/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/event-dispatcher/?branch=master)
 
 ## Features
