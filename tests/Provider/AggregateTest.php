@@ -1,4 +1,5 @@
 <?php
+
 namespace Yiisoft\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
@@ -12,7 +13,7 @@ class AggregateTest extends TestCase
     {
         $event = new Event();
 
-        $provider1 = new class implements ListenerProviderInterface {
+        $provider1 = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield function (Event $event) {
@@ -21,7 +22,7 @@ class AggregateTest extends TestCase
             }
         };
 
-        $provider2 = new class implements ListenerProviderInterface {
+        $provider2 = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield function (Event $event) {

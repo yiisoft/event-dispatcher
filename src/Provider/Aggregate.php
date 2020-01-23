@@ -1,4 +1,5 @@
 <?php
+
 namespace Yiisoft\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;

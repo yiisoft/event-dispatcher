@@ -1,4 +1,5 @@
 <?php
+
 namespace Yiisoft\EventDispatcher\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -13,7 +14,7 @@ class DispatcherTest extends TestCase
     {
         $event = new Event();
 
-        $provider = new class implements ListenerProviderInterface {
+        $provider = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield function (Event $event) {
@@ -38,7 +39,7 @@ class DispatcherTest extends TestCase
     {
         $event = new StoppableEvent();
 
-        $provider = new class implements ListenerProviderInterface {
+        $provider = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield function (StoppableEvent $event) {
