@@ -19,7 +19,7 @@ to events dispatched.
 - [PSR-14](http://www.php-fig.org/psr/psr-14/) compatible.
 - Simple and lightweight.
 - Encourages designing event hierarchy.
-- Can combine mutliple event listener providers.
+- Can combine multiple event listener providers.
 
 ## General usage
 
