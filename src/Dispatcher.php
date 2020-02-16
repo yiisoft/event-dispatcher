@@ -12,23 +12,13 @@ use Psr\EventDispatcher\StoppableEventInterface;
  */
 final class Dispatcher implements EventDispatcherInterface
 {
-    /**
-     * @var ListenerProviderInterface
-     */
     private ListenerProviderInterface $listenerProvider;
 
-    /**
-     * @param ListenerProviderInterface $listenerProvider
-     */
     public function __construct(ListenerProviderInterface $listenerProvider)
     {
         $this->listenerProvider = $listenerProvider;
     }
 
-    /**
-     * @param object $event
-     * @return object
-     */
     public function dispatch(object $event): object
     {
         foreach ($this->listenerProvider->getListenersForEvent($event) as $listener) {

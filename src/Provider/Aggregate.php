@@ -15,10 +15,6 @@ final class Aggregate implements ListenerProviderInterface
      */
     private array $providers = [];
 
-    /**
-     * @param object $event
-     * @return iterable<callable>
-     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->providers as $provider) {
