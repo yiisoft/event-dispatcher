@@ -10,26 +10,18 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  */
 final class Provider implements ListenerProviderInterface
 {
-    private $listeners = [];
+    /**
+     * @var ConcreteProvider
+     */
+    private ConcreteProvider $concreteProvider;
 
+    /**
+     * @param object $event
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
-        $className = get_class($event);
-        if (isset($this->listeners[$className])) {
-            yield from $this->listeners[$className];
-        }
-
-        foreach (class_parents($event) as $parent) {
-            if (isset($this->listeners[$parent])) {
-                yield from $this->listeners[$parent];
-            }
-        }
-
-        foreach (class_implements($event) as $interface) {
-            if (isset($this->listeners[$interface])) {
-                yield from $this->listeners[$interface];
-            }
-        }
+        yield from $this->concreteProvider->getListenersForEvent($event);
     }
 
     /**
@@ -47,7 +39,9 @@ final class Provider implements ListenerProviderInterface
      */
     public function attach(callable $listener): void
     {
-        $this->listeners[$this->getParameterType($listener)][] = $listener;
+        $eventName = $this->getParameterType($listener);
+
+        $this->concreteProvider()->attach($eventName, $listener);
     }
 
     /**
@@ -57,7 +51,7 @@ final class Provider implements ListenerProviderInterface
      */
     public function detach(string $interface): void
     {
-        unset($this->listeners[$interface]);
+        $this->concreteProvider()->detach($interface);
     }
 
     /**
@@ -168,5 +162,13 @@ final class Provider implements ListenerProviderInterface
     private function isClassCallable($callable): bool
     {
         return is_array($callable) && is_string($callable[0]) && class_exists($callable[0]);
+    }
+
+    /**
+     * @return ConcreteProvider
+     */
+    private function concreteProvider(): ConcreteProvider
+    {
+        return $this->concreteProvider ??= new ConcreteProvider();
     }
 }
