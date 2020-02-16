@@ -10,7 +10,10 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  */
 final class Provider implements ListenerProviderInterface
 {
-    private $listeners = [];
+    /**
+     * @var callable[]
+     */
+    private array $listeners = [];
 
     public function getListenersForEvent(object $event): iterable
     {

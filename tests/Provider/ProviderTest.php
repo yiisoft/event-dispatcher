@@ -15,7 +15,7 @@ use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
 
 class ProviderTest extends TestCase
 {
-    public function testAttachCallableArray()
+    public function testAttachCallableArray(): void
     {
         $provider = new Provider();
         $provider->attach([WithStaticMethod::class, 'handle']);
@@ -24,7 +24,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testAttachCallableFunction()
+    public function testAttachCallableFunction(): void
     {
         $provider = new Provider();
         $provider->attach('Yiisoft\EventDispatcher\Tests\Provider\handle');
@@ -33,7 +33,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testAttachClosure()
+    public function testAttachClosure(): void
     {
         $provider = new Provider();
         $provider->attach(function (Event $event) {
@@ -44,7 +44,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testAttachCallableObject()
+    public function testAttachCallableObject(): void
     {
         $provider = new Provider();
         $provider->attach([new NonStatic(), 'handle']);
@@ -53,7 +53,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testInvokable()
+    public function testInvokable(): void
     {
         $provider = new Provider();
         $provider->attach(new Invokable());
@@ -62,7 +62,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testListenersForClassHierarchyAreReturned()
+    public function testListenersForClassHierarchyAreReturned(): void
     {
         $provider = new Provider();
 
@@ -100,7 +100,7 @@ class ProviderTest extends TestCase
     }
 }
 
-function handle(Event $event)
+function handle(Event $event): void
 {
     // do nothing
 }
