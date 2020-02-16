@@ -12,14 +12,24 @@ use Psr\EventDispatcher\StoppableEventInterface;
  */
 final class Dispatcher implements EventDispatcherInterface
 {
-    private $listenerProvider;
+    /**
+     * @var ListenerProviderInterface
+     */
+    private ListenerProviderInterface $listenerProvider;
 
+    /**
+     * @param ListenerProviderInterface $listenerProvider
+     */
     public function __construct(ListenerProviderInterface $listenerProvider)
     {
         $this->listenerProvider = $listenerProvider;
     }
 
-    public function dispatch(object $event)
+    /**
+     * @param object $event
+     * @return object
+     */
+    public function dispatch(object $event): object
     {
         foreach ($this->listenerProvider->getListenersForEvent($event) as $listener) {
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {

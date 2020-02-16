@@ -10,7 +10,7 @@ use Yiisoft\EventDispatcher\Tests\Event\StoppableEvent;
 
 class DispatcherTest extends TestCase
 {
-    public function testCallsAllListeners()
+    public function testCallsAllListeners(): void
     {
         $event = new Event();
 
@@ -35,7 +35,7 @@ class DispatcherTest extends TestCase
         $this->assertEquals([1, 2, 3], $event->registered());
     }
 
-    public function testPropagationStops()
+    public function testPropagationStops(): void
     {
         $event = new StoppableEvent();
 

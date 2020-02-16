@@ -10,8 +10,15 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  */
 final class Provider implements ListenerProviderInterface
 {
-    private $listeners = [];
+    /**
+     * @var callable[]
+     */
+    private array $listeners = [];
 
+    /**
+     * @param object $event
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         $className = get_class($event);
