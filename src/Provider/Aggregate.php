@@ -13,7 +13,7 @@ final class Aggregate implements ListenerProviderInterface
     /**
      * @var ListenerProviderInterface[]
      */
-    private $providers;
+    private array $providers = [];
 
     public function getListenersForEvent(object $event): iterable
     {
