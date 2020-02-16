@@ -105,6 +105,16 @@ class ProviderTest extends TestCase
         $this->assertContains('parent interface', $interfaceHandlers);
     }
 
+    public function testDetachListenersForEventAreDetached(): void
+    {
+        $this->provider->attach(fn (Event $event) => null);
+        $this->provider->detach(Event::class);
+
+        $listeners = $this->provider->getListenersForEvent(new Event());
+
+        $this->assertCount(0, $listeners);
+    }
+
     public function testListenerWithNoParameterThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
