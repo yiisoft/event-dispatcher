@@ -13,7 +13,7 @@ use Yiisoft\EventDispatcher\Tests\Listener\Invokable;
 use Yiisoft\EventDispatcher\Tests\Listener\NonStatic;
 use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
 
-class ProviderTest extends TestCase
+final class ProviderTest extends TestCase
 {
     public function testAttachCallableArray(): void
     {

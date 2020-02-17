@@ -12,58 +12,52 @@ use Yiisoft\EventDispatcher\Tests\Event\ParentInterface;
 
 use function array_slice;
 
-class ConcreteProviderTest extends TestCase
+final class ConcreteProviderTest extends TestCase
 {
-    /**
-     * @var ConcreteProvider
-     */
-    private ConcreteProvider $concreteProvider;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->concreteProvider = new ConcreteProvider();
-    }
-
     public function testListenerForEventIsReturned(): void
     {
+        $provider = $this->createConcreteProvider();
+
         $listener = fn () => null;
 
-        $this->concreteProvider->attach(Event::class, $listener);
+        $provider->attach(Event::class, $listener);
 
-        $listeners = $this->concreteProvider->getListenersForEvent(new Event());
+        $listeners = $provider->getListenersForEvent(new Event());
 
-        $this->assertContains($listener, $listeners);
+        $this->assertEquals([$listener], $listeners);
     }
 
     public function testDetachListenersForEventAreDetached(): void
     {
-        $this->concreteProvider->attach(Event::class, fn () => null);
-        $this->concreteProvider->detach(Event::class);
+        $provider = $this->createConcreteProvider();
 
-        $listeners = $this->concreteProvider->getListenersForEvent(new Event());
+        $provider->attach(Event::class, fn () => null);
+        $provider->detach(Event::class);
+
+        $listeners = $provider->getListenersForEvent(new Event());
 
         $this->assertCount(0, $listeners);
     }
 
     public function testListenersForClassHierarchyAreReturned(): void
     {
-        $this->concreteProvider->attach(ParentInterface::class, function (ParentInterface $parentInterface) {
+        $provider = $this->createConcreteProvider();
+
+        $provider->attach(ParentInterface::class, function (ParentInterface $parentInterface) {
             $parentInterface->register('parent interface');
         });
-        $this->concreteProvider->attach(ParentClass::class, function (ParentClass $parentClass) {
+        $provider->attach(ParentClass::class, function (ParentClass $parentClass) {
             $parentClass->register('parent class');
         });
-        $this->concreteProvider->attach(ClassInterface::class, function (ClassInterface $classInterface) {
+        $provider->attach(ClassInterface::class, function (ClassInterface $classInterface) {
             $classInterface->register('class interface');
         });
-        $this->concreteProvider->attach(ClassItself::class, function (ClassItself $classItself) {
+        $provider->attach(ClassItself::class, function (ClassItself $classItself) {
             $classItself->register('class itself');
         });
 
         $event = new ClassItself();
-        foreach ($this->concreteProvider->getListenersForEvent($event) as $listener) {
+        foreach ($provider->getListenersForEvent($event) as $listener) {
             $listener($event);
         }
 
@@ -80,5 +74,10 @@ class ConcreteProviderTest extends TestCase
 
         $this->assertContains('class interface', $interfaceHandlers);
         $this->assertContains('parent interface', $interfaceHandlers);
+    }
+
+    private function createConcreteProvider(): ConcreteProvider
+    {
+        return new ConcreteProvider();
     }
 }
