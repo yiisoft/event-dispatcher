@@ -24,6 +24,7 @@ final class ConcreteProviderTest extends TestCase
 
         $listeners = $provider->getListenersForEvent(new Event());
 
+        $listeners = \iterator_to_array($listeners, false);
         $this->assertCount(1, $listeners);
         $this->assertContains($listener, $listeners);
     }
