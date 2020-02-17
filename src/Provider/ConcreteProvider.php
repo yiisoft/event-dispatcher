@@ -41,11 +41,11 @@ final class ConcreteProvider implements ListenerProviderInterface
     /**
      * Detach all event handlers registered for an interface
      *
-     * @param string $interface
+     * @param string $eventName
      */
-    public function detach(string $interface): void
+    public function detach(string $eventName): void
     {
-        unset($this->listeners[$interface]);
+        unset($this->listeners[$eventName]);
     }
 
     /**
