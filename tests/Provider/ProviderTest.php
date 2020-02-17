@@ -2,7 +2,6 @@
 
 namespace Yiisoft\EventDispatcher\Tests\Provider;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\EventDispatcher\Provider\Provider;
 use Yiisoft\EventDispatcher\Tests\Event\ClassItself;
@@ -18,63 +17,70 @@ final class ProviderTest extends TestCase
 {
     public function testAttachCallableArray(): void
     {
-        $this->provider->attach([WithStaticMethod::class, 'handle']);
+        $provider = new Provider();
+        $provider->attach([WithStaticMethod::class, 'handle']);
 
-        $listeners = $this->provider->getListenersForEvent(new Event());
+        $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
     }
 
     public function testAttachCallableFunction(): void
     {
-        $this->provider->attach('Yiisoft\EventDispatcher\Tests\Provider\handle');
+        $provider = new Provider();
+        $provider->attach('Yiisoft\EventDispatcher\Tests\Provider\handle');
 
-        $listeners = $this->provider->getListenersForEvent(new Event());
+        $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
     }
 
     public function testAttachClosure(): void
     {
-        $this->provider->attach(function (Event $event) {
+        $provider = new Provider();
+        $provider->attach(function (Event $event) {
             // do nothing
         });
 
-        $listeners = $this->provider->getListenersForEvent(new Event());
+        $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
     }
 
     public function testAttachCallableObject(): void
     {
-        $this->provider->attach([new NonStatic(), 'handle']);
+        $provider = new Provider();
+        $provider->attach([new NonStatic(), 'handle']);
 
-        $listeners = $this->provider->getListenersForEvent(new Event());
+        $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
     }
 
     public function testInvokable(): void
     {
-        $this->provider->attach(new Invokable());
+        $provider = new Provider();
+        $provider->attach(new Invokable());
 
-        $listeners = $this->provider->getListenersForEvent(new Event());
+        $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
     }
 
     public function testListenersForClassHierarchyAreReturned(): void
     {
-        $this->provider->attach(function (ParentInterface $parentInterface) {
+        $provider = new Provider();
+
+        $provider->attach(function (ParentInterface $parentInterface) {
             $parentInterface->register('parent interface');
         });
-        $this->provider->attach(function (ParentClass $parentClass) {
+        $provider->attach(function (ParentClass $parentClass) {
             $parentClass->register('parent class');
         });
-        $this->provider->attach(function (ClassInterface $classInterface) {
+        $provider->attach(function (ClassInterface $classInterface) {
             $classInterface->register('class interface');
         });
-        $this->provider->attach(function (ClassItself $classItself) {
+        $provider->attach(function (ClassItself $classItself) {
             $classItself->register('class itself');
         });
 
         $event = new ClassItself();
-        foreach ($this->provider->getListenersForEvent($event) as $listener) {
+        foreach ($provider->getListenersForEvent($event) as $listener) {
             $listener($event);
         }
 
@@ -93,22 +99,14 @@ final class ProviderTest extends TestCase
         $this->assertContains('parent interface', $interfaceHandlers);
     }
 
-    public function testDetachListenersForEventAreDetached(): void
-    {
-        $this->provider->attach(fn (Event $event) => null);
-        $this->provider->detach(Event::class);
-
-        $listeners = $this->provider->getListenersForEvent(new Event());
-
-        $this->assertCount(0, $listeners);
-    }
-
     public function testListenerWithNoParameterThrowsException(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $provider = new Provider();
+
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Listeners must declare an object type they can accept.');
 
-        $this->provider->attach(fn () => null);
+        $provider->attach(fn () => null);
     }
 }
 
