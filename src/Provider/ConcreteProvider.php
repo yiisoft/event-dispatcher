@@ -10,7 +10,7 @@ use function class_parents;
 use function get_class;
 
 /**
- * Provider is a listener provider that registers event listeners for interface names specified explicitly
+ * ConcreteProvider is a listener provider that registers event listeners for interface names specified explicitly
  * and gives out a list of handlers for further use with Dispatcher.
  *
  * ```php
