@@ -19,7 +19,7 @@ to events dispatched.
 - [PSR-14](http://www.php-fig.org/psr/psr-14/) compatible.
 - Simple and lightweight.
 - Encourages designing event hierarchy.
-- Can combine mutliple event listener providers.
+- Can combine multiple event listener providers.
 
 ## General usage
 
@@ -115,6 +115,24 @@ $aggregate->attach(new class implements ListenerProviderInterface {
 });
 
 $dispatcher = new Yiisoft\EventDispatcher\Dispatcher($aggregate);
+```
+
+## Register listeners with concrete event names
+
+You may use a more simple listener provider, which allows you to specify which event they can provide.
+
+It can be useful in some specific cases, for instance if one of your listeners does not need the event 
+object passed as a parameter (can happen if the listener only needs to run at a specific stage during 
+runtime, but does not need event data).
+
+In that case, it is advised to use the aggregate (see above) if you need features from both providers included
+in this library.
+
+```php
+$provider = new Yiisoft\EventDispatcher\Provider\ConcreteProvider();
+$provider->attach(SomeEvent::class, function () {
+    // this function does not need an event object as argument
+});
 ```
 
 ## Credits

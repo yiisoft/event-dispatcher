@@ -14,21 +14,9 @@ use Yiisoft\EventDispatcher\Tests\Listener\Invokable;
 use Yiisoft\EventDispatcher\Tests\Listener\NonStatic;
 use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
 
-class ProviderTest extends TestCase
+final class ProviderTest extends TestCase
 {
-    /**
-     * @var Provider
-     */
-    private Provider $provider;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->provider = new Provider();
-    }
-
-    public function testAttachCallableArray()
+    public function testAttachCallableArray(): void
     {
         $this->provider->attach([WithStaticMethod::class, 'handle']);
 
@@ -36,7 +24,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testAttachCallableFunction()
+    public function testAttachCallableFunction(): void
     {
         $this->provider->attach('Yiisoft\EventDispatcher\Tests\Provider\handle');
 
@@ -44,7 +32,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testAttachClosure()
+    public function testAttachClosure(): void
     {
         $this->provider->attach(function (Event $event) {
             // do nothing
@@ -54,7 +42,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testAttachCallableObject()
+    public function testAttachCallableObject(): void
     {
         $this->provider->attach([new NonStatic(), 'handle']);
 
@@ -62,7 +50,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testInvokable()
+    public function testInvokable(): void
     {
         $this->provider->attach(new Invokable());
 
@@ -70,7 +58,7 @@ class ProviderTest extends TestCase
         $this->assertCount(1, $listeners);
     }
 
-    public function testListenersForClassHierarchyAreReturned()
+    public function testListenersForClassHierarchyAreReturned(): void
     {
         $this->provider->attach(function (ParentInterface $parentInterface) {
             $parentInterface->register('parent interface');
@@ -124,7 +112,7 @@ class ProviderTest extends TestCase
     }
 }
 
-function handle(Event $event)
+function handle(Event $event): void
 {
     // do nothing
 }
