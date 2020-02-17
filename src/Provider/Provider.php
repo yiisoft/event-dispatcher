@@ -20,9 +20,6 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  */
 final class Provider implements ListenerProviderInterface
 {
-    /**
-     * @var ConcreteProvider
-     */
     private ConcreteProvider $concreteProvider;
 
     public function __construct()
