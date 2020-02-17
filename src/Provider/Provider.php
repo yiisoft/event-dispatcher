@@ -7,6 +7,16 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 /**
  * Provider is a listener provider that registers event listeners for interfaces used in callable type-hints
  * and gives out a list of handlers by event interface provided for further use with Dispatcher.
+ *
+ * ```php
+ * $provider = new Yiisoft\EventDispatcher\Provider\Provider();
+ *
+ * // adding some listeners
+ * $provider->attach(function (AfterDocumentProcessed $event) {
+ *    $document = $event->getDocument();
+ *    // do something with document
+ * });
+ * ```
  */
 final class Provider implements ListenerProviderInterface
 {
