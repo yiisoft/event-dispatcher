@@ -15,6 +15,11 @@ final class Provider implements ListenerProviderInterface
      */
     private ConcreteProvider $concreteProvider;
 
+    public function __construct()
+    {
+        $this->concreteProvider = new ConcreteProvider();
+    }
+
     /**
      * @param object $event
      * @return iterable<callable>
@@ -41,7 +46,7 @@ final class Provider implements ListenerProviderInterface
     {
         $eventName = $this->getParameterType($listener);
 
-        $this->concreteProvider()->attach($eventName, $listener);
+        $this->concreteProvider->attach($eventName, $listener);
     }
 
     /**
@@ -51,7 +56,7 @@ final class Provider implements ListenerProviderInterface
      */
     public function detach(string $interface): void
     {
-        $this->concreteProvider()->detach($interface);
+        $this->concreteProvider->detach($interface);
     }
 
     /**
@@ -162,13 +167,5 @@ final class Provider implements ListenerProviderInterface
     private function isClassCallable($callable): bool
     {
         return is_array($callable) && is_string($callable[0]) && class_exists($callable[0]);
-    }
-
-    /**
-     * @return ConcreteProvider
-     */
-    private function concreteProvider(): ConcreteProvider
-    {
-        return $this->concreteProvider ??= new ConcreteProvider();
     }
 }
