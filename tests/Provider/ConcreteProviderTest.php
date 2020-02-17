@@ -24,7 +24,8 @@ final class ConcreteProviderTest extends TestCase
 
         $listeners = $provider->getListenersForEvent(new Event());
 
-        $this->assertEquals([$listener], $listeners);
+        $this->assertCount(1, $listeners);
+        $this->assertContains($listener, $listeners);
     }
 
     public function testDetachListenersForEventAreDetached(): void
