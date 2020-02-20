@@ -28,7 +28,7 @@ for a certain event type. Dispatcher's job is to take an event, get a listeners 
 
 ```php
 $provider = new Yiisoft\EventDispatcher\Provider\Provider();
-$dispatcher = new Yiisoft\EventDispatcher\Dispatcher($provider);
+$dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($provider);
 
 // adding some listeners
 $provider->attach(function (AfterDocumentProcessed $event) {
@@ -114,7 +114,7 @@ $compositeProvider->attach(new class implements ListenerProviderInterface {
     }
 });
 
-$dispatcher = new Yiisoft\EventDispatcher\Dispatcher($compositeProvider);
+$dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($compositeProvider);
 ```
 
 ## Register listeners with concrete event names
