@@ -99,13 +99,13 @@ $provider->attach(function (DocumentEvent $event) {
 
 ## Combining multiple listener providers
 
-In case you want to combine multiple listener providers, you can use `Aggregate`:
+In case you want to combine multiple listener providers, you can use `CompositeProvider`:
 
 ```php
-$aggregate = new Yiisoft\EventDispatcher\Provider\Aggregate();
-$provider1 = new Yiisoft\EventDispatcher\Provider\Provider();
-$aggregate->attach($provider1);
-$aggregate->attach(new class implements ListenerProviderInterface {
+$compositeProvider = new Yiisoft\EventDispatcher\Provider\CompositeProvider();
+$provider = new Yiisoft\EventDispatcher\Provider\Provider();
+$compositeProvider->attach($provider);
+$compositeProvider->attach(new class implements ListenerProviderInterface {
     public function getListenersForEvent(object $event): iterable
     {
         yield function ($event) {
@@ -114,7 +114,7 @@ $aggregate->attach(new class implements ListenerProviderInterface {
     }
 });
 
-$dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($aggregate);
+$dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($compositeProvider);
 ```
 
 ## Register listeners with concrete event names

@@ -5,10 +5,9 @@ namespace Yiisoft\EventDispatcher\Provider;
 use Psr\EventDispatcher\ListenerProviderInterface;
 
 /**
- * Aggregate is a listener provider that allows combining
- * multiple listener providers.
+ * CompositeProvider is a listener provider that allows combining multiple listener providers.
  */
-final class Aggregate implements ListenerProviderInterface
+final class CompositeProvider implements ListenerProviderInterface
 {
     /**
      * @var ListenerProviderInterface[]
