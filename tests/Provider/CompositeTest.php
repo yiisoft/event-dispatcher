@@ -4,10 +4,10 @@ namespace Yiisoft\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use Yiisoft\EventDispatcher\Provider\Aggregate;
+use Yiisoft\EventDispatcher\Provider\CompositeProvider;
 use Yiisoft\EventDispatcher\Tests\Event\Event;
 
-class AggregateTest extends TestCase
+class CompositeTest extends TestCase
 {
     public function testProvidesAllListeners(): void
     {
@@ -31,7 +31,7 @@ class AggregateTest extends TestCase
             }
         };
 
-        $aggregate = new Aggregate();
+        $aggregate = new CompositeProvider();
 
         $aggregate->attach($provider1);
         $aggregate->attach($provider2);
