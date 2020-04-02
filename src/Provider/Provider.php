@@ -20,20 +20,16 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  */
 final class Provider implements ListenerProviderInterface
 {
-    private ConcreteProvider $concreteProvider;
-
-    public function __construct()
-    {
-        $this->concreteProvider = new ConcreteProvider();
-    }
-
     /**
-     * @param object $event
-     * @return iterable<callable>
+     * @var callable[]
      */
+    private array $listeners = [];
+
     public function getListenersForEvent(object $event): iterable
     {
-        yield from $this->concreteProvider->getListenersForEvent($event);
+        yield from $this->listenersFor(get_class($event));
+        yield from $this->listenersFor(...array_values(class_parents($event)));
+        yield from $this->listenersFor(...array_values(class_implements($event)));
     }
 
     /**
@@ -56,7 +52,7 @@ final class Provider implements ListenerProviderInterface
             $eventClassName = $this->getParameterType($listener);
         }
 
-        $this->concreteProvider->attach($listener, $eventClassName);
+        $this->listeners[$eventClassName][] = $listener;
     }
 
     /**
@@ -66,7 +62,7 @@ final class Provider implements ListenerProviderInterface
      */
     public function detach(string $eventClassName): void
     {
-        $this->concreteProvider->detach($eventClassName);
+        unset($this->listeners[$eventClassName]);
     }
 
     /**
@@ -177,5 +173,18 @@ final class Provider implements ListenerProviderInterface
     private function isClassCallable($callable): bool
     {
         return is_array($callable) && is_string($callable[0]) && class_exists($callable[0]);
+    }
+
+    /**
+     * @param string ...$eventClassNames
+     * @return iterable<callable>
+     */
+    private function listenersFor(string ...$eventClassNames): iterable
+    {
+        foreach ($eventClassNames as $eventClassName) {
+            if (isset($this->listeners[$eventClassName])) {
+                yield from $this->listeners[$eventClassName];
+            }
+        }
     }
 }
