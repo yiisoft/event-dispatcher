@@ -20,7 +20,7 @@ final class ConcreteProviderTest extends TestCase
 
         $listener = fn () => null;
 
-        $provider->attach(Event::class, $listener);
+        $provider->attach($listener, Event::class);
 
         $listeners = $provider->getListenersForEvent(new Event());
 
@@ -33,7 +33,7 @@ final class ConcreteProviderTest extends TestCase
     {
         $provider = $this->createConcreteProvider();
 
-        $provider->attach(Event::class, fn () => null);
+        $provider->attach(fn () => null, Event::class);
         $provider->detach(Event::class);
 
         $listeners = $provider->getListenersForEvent(new Event());
@@ -45,18 +45,18 @@ final class ConcreteProviderTest extends TestCase
     {
         $provider = $this->createConcreteProvider();
 
-        $provider->attach(ParentInterface::class, function (ParentInterface $parentInterface) {
+        $provider->attach(function (ParentInterface $parentInterface) {
             $parentInterface->register('parent interface');
-        });
-        $provider->attach(ParentClass::class, function (ParentClass $parentClass) {
+        }, ParentInterface::class);
+        $provider->attach(function (ParentClass $parentClass) {
             $parentClass->register('parent class');
-        });
-        $provider->attach(ClassInterface::class, function (ClassInterface $classInterface) {
+        }, ParentClass::class);
+        $provider->attach(function (ClassInterface $classInterface) {
             $classInterface->register('class interface');
-        });
-        $provider->attach(ClassItself::class, function (ClassItself $classItself) {
+        }, ClassInterface::class);
+        $provider->attach(function (ClassItself $classItself) {
             $classItself->register('class itself');
-        });
+        }, ClassItself::class);
 
         $event = new ClassItself();
         foreach ($provider->getListenersForEvent($event) as $listener) {
