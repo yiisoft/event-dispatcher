@@ -41,33 +41,33 @@ final class ConcreteProvider implements ListenerProviderInterface
     /**
      * Attach an event handler for the given event name
      *
-     * @param string $eventName
+     * @param string $eventClassName
      * @param callable $listener
      */
-    public function attach(string $eventName, callable $listener): void
+    public function attach(callable $listener, string $eventClassName): void
     {
-        $this->listeners[$eventName][] = $listener;
+        $this->listeners[$eventClassName][] = $listener;
     }
 
     /**
      * Detach all event handlers registered for an interface
      *
-     * @param string $eventName
+     * @param string $eventClassName
      */
-    public function detach(string $eventName): void
+    public function detach(string $eventClassName): void
     {
-        unset($this->listeners[$eventName]);
+        unset($this->listeners[$eventClassName]);
     }
 
     /**
-     * @param string ...$eventNames
+     * @param string ...$eventClassNames
      * @return iterable<callable>
      */
-    private function listenersFor(string ...$eventNames): iterable
+    private function listenersFor(string ...$eventClassNames): iterable
     {
-        foreach ($eventNames as $name) {
-            if (isset($this->listeners[$name])) {
-                yield from $this->listeners[$name];
+        foreach ($eventClassNames as $eventClassName) {
+            if (isset($this->listeners[$eventClassName])) {
+                yield from $this->listeners[$eventClassName];
             }
         }
     }

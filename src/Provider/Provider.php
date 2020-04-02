@@ -48,22 +48,25 @@ final class Provider implements ListenerProviderInterface
      * Any callable could be used be it a closure, invokable object or array referencing a class or object.
      *
      * @param callable $listener
+     * @param string $eventClassName
      */
-    public function attach(callable $listener): void
+    public function attach(callable $listener, string $eventClassName = ''): void
     {
-        $eventName = $this->getParameterType($listener);
+        if ($eventClassName === '') {
+            $eventClassName = $this->getParameterType($listener);
+        }
 
-        $this->concreteProvider->attach($eventName, $listener);
+        $this->concreteProvider->attach($listener, $eventClassName);
     }
 
     /**
-     * Detach all event handlers registered for an interface
+     * Detach all event handlers registered for an event
      *
-     * @param string $interface
+     * @param string $eventClassName
      */
-    public function detach(string $interface): void
+    public function detach(string $eventClassName): void
     {
-        $this->concreteProvider->detach($interface);
+        $this->concreteProvider->detach($eventClassName);
     }
 
     /**
