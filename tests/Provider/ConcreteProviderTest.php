@@ -3,7 +3,7 @@
 namespace Yiisoft\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\EventDispatcher\Provider\ConcreteProvider;
+use Yiisoft\EventDispatcher\Provider\Provider;
 use Yiisoft\EventDispatcher\Tests\Event\ClassInterface;
 use Yiisoft\EventDispatcher\Tests\Event\ClassItself;
 use Yiisoft\EventDispatcher\Tests\Event\Event;
@@ -78,8 +78,8 @@ final class ConcreteProviderTest extends TestCase
         $this->assertContains('parent interface', $interfaceHandlers);
     }
 
-    private function createConcreteProvider(): ConcreteProvider
+    private function createConcreteProvider(): Provider
     {
-        return new ConcreteProvider();
+        return new Provider();
     }
 }
