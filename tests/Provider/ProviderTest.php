@@ -108,6 +108,33 @@ final class ProviderTest extends TestCase
 
         $provider->attach(fn () => null);
     }
+
+    public function testListenerForEventIsReturned(): void
+    {
+        $provider = new Provider();
+
+        $listener = fn () => null;
+
+        $provider->attach($listener, Event::class);
+
+        $listeners = $provider->getListenersForEvent(new Event());
+
+        $listeners = \iterator_to_array($listeners, false);
+        $this->assertCount(1, $listeners);
+        $this->assertContains($listener, $listeners);
+    }
+
+    public function testDetachListenersForEventAreDetached(): void
+    {
+        $provider = new Provider();
+
+        $provider->attach(fn () => null, Event::class);
+        $provider->detach(Event::class);
+
+        $listeners = $provider->getListenersForEvent(new Event());
+
+        $this->assertCount(0, $listeners);
+    }
 }
 
 function handle(Event $event): void
