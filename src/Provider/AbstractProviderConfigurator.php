@@ -9,7 +9,7 @@ class AbstractProviderConfigurator
         throw new \RuntimeException("Method 'attach' does not exist.");
     }
 
-    public function detach(string $eventClassName): void
+    protected function detach(string $eventClassName): void
     {
         throw new \RuntimeException("Method 'detach' does not exist.");
     }

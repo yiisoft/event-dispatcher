@@ -60,7 +60,7 @@ final class Provider extends AbstractProviderConfigurator implements ListenerPro
      *
      * @param string $eventClassName
      */
-    public function detach(string $eventClassName): void
+    protected function detach(string $eventClassName): void
     {
         unset($this->listeners[$eventClassName]);
     }
