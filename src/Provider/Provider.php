@@ -18,7 +18,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  * });
  * ```
  */
-final class Provider implements ListenerProviderInterface
+final class Provider extends AbstractProviderConfigurator implements ListenerProviderInterface
 {
     /**
      * @var callable[]
@@ -46,7 +46,7 @@ final class Provider implements ListenerProviderInterface
      * @param callable $listener
      * @param string $eventClassName
      */
-    public function attach(callable $listener, string $eventClassName = ''): void
+    protected function attach(callable $listener, string $eventClassName = ''): void
     {
         if ($eventClassName === '') {
             $eventClassName = $this->getParameterType($listener);
