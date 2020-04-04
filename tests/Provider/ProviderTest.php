@@ -148,8 +148,7 @@ final class ProviderTest extends TestCase
 
     private function getProviderConfigurator(Provider $provider)
     {
-        return new class($provider) extends AbstractProviderConfigurator
-        {
+        return new class($provider) extends AbstractProviderConfigurator {
             private Provider $provider;
 
             public function __construct(Provider $provider)
