@@ -2,7 +2,7 @@
 
 namespace Yiisoft\EventDispatcher\Provider;
 
-class AbstractProviderConfigurator
+abstract class AbstractProviderConfigurator
 {
     protected function attach(callable $listener, string $eventClassName = ''): void
     {
