@@ -133,19 +133,6 @@ final class ProviderTest extends TestCase
         $this->assertContains($listener, $listeners);
     }
 
-    public function testDetachListenersForEventAreDetached(): void
-    {
-        $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
-
-        $providerConfigurator->attach(fn () => null, Event::class);
-        $providerConfigurator->detach(Event::class);
-
-        $listeners = $provider->getListenersForEvent(new Event());
-
-        $this->assertCount(0, $listeners);
-    }
-
     private function getProviderConfigurator(Provider $provider)
     {
         return new class($provider) extends AbstractProviderConfigurator {
@@ -159,11 +146,6 @@ final class ProviderTest extends TestCase
             public function attach(callable $listener, string $eventClassName = ''): void
             {
                 $this->provider->attach($listener, $eventClassName);
-            }
-
-            public function detach(string $eventClassName): void
-            {
-                $this->provider->detach($eventClassName);
             }
         };
     }

@@ -56,16 +56,6 @@ final class Provider extends AbstractProviderConfigurator implements ListenerPro
     }
 
     /**
-     * Detach all event handlers registered for an event
-     *
-     * @param string $eventClassName
-     */
-    protected function detach(string $eventClassName): void
-    {
-        unset($this->listeners[$eventClassName]);
-    }
-
-    /**
      * Derives the interface type of the first argument of a callable.
      *
      * @param callable $callable The callable for which we want the parameter type.
