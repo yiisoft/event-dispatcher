@@ -18,7 +18,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  * });
  * ```
  */
-final class Provider implements ListenerProviderInterface
+final class Provider extends AbstractProviderConfigurator implements ListenerProviderInterface
 {
     /**
      * @var callable[]
@@ -46,23 +46,13 @@ final class Provider implements ListenerProviderInterface
      * @param callable $listener
      * @param string $eventClassName
      */
-    public function attach(callable $listener, string $eventClassName = ''): void
+    protected function attach(callable $listener, string $eventClassName = ''): void
     {
         if ($eventClassName === '') {
             $eventClassName = $this->getParameterType($listener);
         }
 
         $this->listeners[$eventClassName][] = $listener;
-    }
-
-    /**
-     * Detach all event handlers registered for an event
-     *
-     * @param string $eventClassName
-     */
-    public function detach(string $eventClassName): void
-    {
-        unset($this->listeners[$eventClassName]);
     }
 
     /**
