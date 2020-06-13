@@ -58,6 +58,8 @@ final class Provider extends AbstractProviderConfigurator implements ListenerPro
     /**
      * Derives the interface type of the first argument of a callable.
      *
+     * @suppress PhanUndeclaredMethod
+     *
      * @param callable $callable The callable for which we want the parameter type.
      * @return string The interface the parameter is type hinted on.
      */
