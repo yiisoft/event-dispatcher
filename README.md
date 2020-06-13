@@ -139,10 +139,6 @@ $provider->attach(SomeEvent::class, function () {
 });
 ```
 
-### Credits
-
-- Larry Garfield (@crell) for initial implementation of deriving callable parameter type.
-
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
@@ -166,3 +162,7 @@ The code is statically analyzed with [Phan](https://github.com/phan/phan/wiki). 
 ```php
 ./vendor/bin/phan
 ```
+
+### Credits
+
+- Larry Garfield (@crell) for initial implementation of deriving callable parameter type.
