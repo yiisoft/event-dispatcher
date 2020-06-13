@@ -11,18 +11,21 @@ to events dispatched.
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/event-dispatcher/v/stable.png)](https://packagist.org/packages/yiisoft/event-dispatcher)
 [![Total Downloads](https://poser.pugx.org/yiisoft/event-dispatcher/downloads.png)](https://packagist.org/packages/yiisoft/event-dispatcher)
-[![Build Status](https://travis-ci.com/yiisoft/event-dispatcher.svg?branch=master)](https://travis-ci.com/yiisoft/event-dispatcher)
+[![Build Status](https://github.com/yiisoft/event-dispatcher/workflows/build/badge.svg)](https://github.com/yiisoft/event-dispatcher/actions?query=workflow%3Abuild)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/event-dispatcher/badges/coverage.png)](https://scrutinizer-ci.com/g/yiisoft/event-dispatcher/)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/event-dispatcher/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/event-dispatcher/?branch=master)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https://badge-api.stryker-mutator.io/github.com/yiisoft/event-dispatcher/master)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/event-dispatcher/master)
+[![static analysis](https://github.com/yiisoft/event-dispatcher/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/event-dispatcher/actions?query=workflow%3A%22static+analysis%22)
 
-## Features
+
+### Features
 
 - [PSR-14](http://www.php-fig.org/psr/psr-14/) compatible.
 - Simple and lightweight.
 - Encourages designing event hierarchy.
 - Can combine multiple event listener providers.
 
-## General usage
+### General usage
 
 The library consists of two parts: event dispatcher and event listener provider. Provider's job is to register listeners
 for a certain event type. Dispatcher's job is to take an event, get a listeners for it from a provider and call them sequentially.
@@ -51,7 +54,7 @@ class DocumentProcessor
 }
 ```
 
-## Stoppable events
+### Stoppable events
 
 Event could be made stoppable by implementing `Psr\EventDispatcher\StoppableEventInterface`:
 
@@ -70,7 +73,7 @@ class BusyEvent implements Psr\EventDispatcher\StoppableEventInterface
 This way we can ensure that only first event listener will be able to handle the event. Another option is
 to allow stopping propagation in one of the listeners by providing corresponding event method.
 
-## Events hierarchy
+### Events hierarchy
 
 Events do not have any name or wildcard matching on purpose. Event class names and class/interface hierarchy
 and composition could be used to achieve great flexibility:
@@ -98,7 +101,7 @@ $provider->attach(function (DocumentEvent $event) {
 });
 ```
 
-## Combining multiple listener providers
+### Combining multiple listener providers
 
 In case you want to combine multiple listener providers, you can use `CompositeProvider`:
 
@@ -118,7 +121,7 @@ $compositeProvider->attach(new class implements ListenerProviderInterface {
 $dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($compositeProvider);
 ```
 
-## Register listeners with concrete event names
+### Register listeners with concrete event names
 
 You may use a more simple listener provider, which allows you to specify which event they can provide.
 
@@ -136,6 +139,30 @@ $provider->attach(SomeEvent::class, function () {
 });
 ```
 
-## Credits
+### Credits
 
 - Larry Garfield (@crell) for initial implementation of deriving callable parameter type.
+
+### Unit testing
+
+The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
+
+```php
+./vendor/bin/phpunit
+```
+
+### Mutation testing
+
+The package tests are checked with [Infection](https://infection.github.io/) mutation framework. To run it:
+
+```php
+./vendor/bin/infection
+```
+
+### Static analysis
+
+The code is statically analyzed with [Phan](https://github.com/phan/phan/wiki). To run static analysis:
+
+```php
+./vendor/bin/phan
+```
