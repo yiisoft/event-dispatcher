@@ -41,9 +41,29 @@ $provider->attach(function (AfterDocumentProcessed $event) {
 });
 ```
 Attaching events is only allowed from configuration or friendly classes(the ones extending from [AbstractProvideConfigurator](https://github.com/yiisoft/event-dispatcher/blob/master/src/Provider/AbstractProviderConfigurator.php)). 
-Attaching events in runtime (except initialization) usually results in unpredictable and problematic behavior of the code. 
-See [EventConfigurator.php](https://github.com/yiisoft/yii-event/blob/master/src/EventConfigurator.php)
+Example:
 
+```php
+class ProviderConfigurator extends AbstractProviderConfigurator
+{
+    private Provider $provider;
+
+    public function __construct(Provider $provider)
+    {
+        $this->provider = $provider;
+    }
+
+    public function attach(callable $listener, string $eventClassName = ''): void
+    {
+        $this->provider->attach($listener, $eventClassName);
+    }
+}
+
+$configurator = new ProviderConfigurator(new Provider());
+$configurator->attach(function (Event $event) {
+    // do nothing
+});
+```
 
 The event dispatching may look like:
 
