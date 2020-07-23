@@ -22,6 +22,9 @@ final class DeferredProvider implements ListenerProviderInterface
         $this->dispatcher = $dispatcher;
     }
 
+    /**
+     * returns a relevant listener or defer event
+     */
     public function getListenersForEvent(object $event): iterable
     {
         if ($this->deferEvents) {
@@ -31,16 +34,27 @@ final class DeferredProvider implements ListenerProviderInterface
         }
     }
 
+    /**
+     * Enable deferred event mode
+     */
     public function deferEvents(): void
     {
         $this->deferEvents = true;
     }
 
+    /**
+     * Deletes all deferred events
+     */
     public function clearEvents(): void
     {
         $this->events = [];
     }
 
+    /**
+     * Dispatch all deferred events
+     *
+     * @return array dispatch events
+     */
     public function dispatchEvents(): array
     {
         $events = $this->events;
