@@ -12,50 +12,54 @@ class DeferredProviderTest extends TestCase
 {
     public function testEventsDispatchAfterDispatchEventsMethodCall(): void
     {
-        $deferProvider = $this->createDeferredProvider();
-        $deferDispatcher = new Dispatcher($deferProvider);
+        $deferredProvider = $this->createDeferredProvider();
+        $deferredDispatcher = new Dispatcher($deferredProvider);
 
-        $deferProvider->deferEvents();
+        $deferredProvider->deferEvents();
 
         $event = new Event();
-        $deferDispatcher->dispatch($event);
-        $deferDispatcher->dispatch($event);
-        $deferDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
 
         $this->assertEmpty($event->registered());
-        $deferProvider->dispatchEvents();
 
+        $result = $deferredProvider->dispatchEvents();
+
+        $this->assertCount(3, $result);
         $this->assertCount(3, $event->registered());
     }
 
     public function testEventsDispatchImmediatelyBecauseDeferNotUsed(): void
     {
-        $deferProvider = $this->createDeferredProvider();
-        $deferDispatcher = new Dispatcher($deferProvider);
+        $deferredProvider = $this->createDeferredProvider();
+        $deferredDispatcher = new Dispatcher($deferredProvider);
 
         $event = new Event();
-        $deferDispatcher->dispatch($event);
-        $deferDispatcher->dispatch($event);
-        $deferDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
 
         $this->assertCount(3, $event->registered());
     }
 
     public function testClearEvents(): void
     {
-        $deferProvider = $this->createDeferredProvider();
-        $deferDispatcher = new Dispatcher($deferProvider);
+        $deferredProvider = $this->createDeferredProvider();
+        $deferredDispatcher = new Dispatcher($deferredProvider);
 
-        $deferProvider->deferEvents();
+        $deferredProvider->deferEvents();
 
         $event = new Event();
-        $deferDispatcher->dispatch($event);
-        $deferDispatcher->dispatch($event);
-        $deferDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
+        $deferredDispatcher->dispatch($event);
 
-        $deferProvider->clearEvents();
-        $deferProvider->dispatchEvents();
+        $deferredProvider->clearEvents();
 
+        $result = $deferredProvider->dispatchEvents();
+
+        $this->assertEmpty($result);
         $this->assertEmpty($event->registered());
     }
 
