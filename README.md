@@ -139,6 +139,32 @@ $provider->attach(SomeEvent::class, function () {
 });
 ```
 
+### Deferred events
+
+Sometimes you need to send events only after a condition, or don't send them if it didn't work(for example, a failed transaction)
+
+```php
+
+$provider = new Yiisoft\EventDispatcher\Provider\Provider();
+$dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($provider);
+
+$deferredProvider = new Yiisoft\EventDispatcher\Provider\DeferredProvider($dispatcher);
+$deferredDispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($deferredProvider);
+
+$deferredProvider->deferEvents();
+
+$deferredDispatcher->dispatch($event);
+$deferredDispatcher->dispatch($event);
+//.. others dispatch events
+
+try {
+    $this->save();
+    $deferredProvider->dispatchEvents();
+} catch(Exception $e) {
+    //rollback logic
+}
+```
+
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
