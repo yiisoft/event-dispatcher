@@ -25,9 +25,9 @@ final class DeferredProvider implements ListenerProviderInterface
     public function getListenersForEvent(object $event): iterable
     {
         if ($this->deferEvents) {
-            yield fn($event) => $this->addEvent($event);
+            yield fn ($event) => $this->addEvent($event);
         } else {
-            yield fn($event) => $this->dispatchEvent($event);
+            yield fn ($event) => $this->dispatchEvent($event);
         }
     }
 
