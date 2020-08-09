@@ -3,7 +3,6 @@
 namespace Yiisoft\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\EventDispatcher\Provider\AbstractProviderConfigurator;
 use Yiisoft\EventDispatcher\Provider\Provider;
 use Yiisoft\EventDispatcher\Tests\Event\ClassItself;
 use Yiisoft\EventDispatcher\Tests\Event\Event;
@@ -16,11 +15,21 @@ use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
 
 final class ProviderTest extends TestCase
 {
+    public function testAttachWhenLocked(): void
+    {
+        $provider = new Provider();
+        $provider->lock();
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Can not attach more event listeners. Provider is locked.');
+
+        $provider->attach([WithStaticMethod::class, 'handle']);
+    }
+
     public function testAttachCallableArray(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
-        $providerConfigurator->attach([WithStaticMethod::class, 'handle']);
+        $provider->attach([WithStaticMethod::class, 'handle']);
 
         $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
@@ -29,8 +38,7 @@ final class ProviderTest extends TestCase
     public function testAttachCallableFunction(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
-        $providerConfigurator->attach('Yiisoft\EventDispatcher\Tests\Provider\handle');
+        $provider->attach('Yiisoft\EventDispatcher\Tests\Provider\handle');
 
         $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
@@ -39,8 +47,7 @@ final class ProviderTest extends TestCase
     public function testAttachClosure(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
-        $providerConfigurator->attach(function (Event $event) {
+        $provider->attach(function (Event $event) {
             // do nothing
         });
 
@@ -51,8 +58,7 @@ final class ProviderTest extends TestCase
     public function testAttachCallableObject(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
-        $providerConfigurator->attach([new NonStatic(), 'handle']);
+        $provider->attach([new NonStatic(), 'handle']);
 
         $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
@@ -61,8 +67,7 @@ final class ProviderTest extends TestCase
     public function testInvokable(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
-        $providerConfigurator->attach(new Invokable());
+        $provider->attach(new Invokable());
 
         $listeners = $provider->getListenersForEvent(new Event());
         $this->assertCount(1, $listeners);
@@ -71,18 +76,17 @@ final class ProviderTest extends TestCase
     public function testListenersForClassHierarchyAreReturned(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
 
-        $providerConfigurator->attach(function (ParentInterface $parentInterface) {
+        $provider->attach(function (ParentInterface $parentInterface) {
             $parentInterface->register('parent interface');
         });
-        $providerConfigurator->attach(function (ParentClass $parentClass) {
+        $provider->attach(function (ParentClass $parentClass) {
             $parentClass->register('parent class');
         });
-        $providerConfigurator->attach(function (ClassInterface $classInterface) {
+        $provider->attach(function (ClassInterface $classInterface) {
             $classInterface->register('class interface');
         });
-        $providerConfigurator->attach(function (ClassItself $classItself) {
+        $provider->attach(function (ClassItself $classItself) {
             $classItself->register('class itself');
         });
 
@@ -109,45 +113,26 @@ final class ProviderTest extends TestCase
     public function testListenerWithNoParameterThrowsException(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
 
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Listeners must declare an object type they can accept.');
 
-        $providerConfigurator->attach(fn () => null);
+        $provider->attach(fn () => null);
     }
 
     public function testListenerForEventIsReturned(): void
     {
         $provider = new Provider();
-        $providerConfigurator = $this->getProviderConfigurator($provider);
 
         $listener = fn () => null;
 
-        $providerConfigurator->attach($listener, Event::class);
+        $provider->attach($listener, Event::class);
 
         $listeners = $provider->getListenersForEvent(new Event());
 
         $listeners = \iterator_to_array($listeners, false);
         $this->assertCount(1, $listeners);
         $this->assertContains($listener, $listeners);
-    }
-
-    private function getProviderConfigurator(Provider $provider)
-    {
-        return new class($provider) extends AbstractProviderConfigurator {
-            private Provider $provider;
-
-            public function __construct(Provider $provider)
-            {
-                $this->provider = $provider;
-            }
-
-            public function attach(callable $listener, string $eventClassName = ''): void
-            {
-                $this->provider->attach($listener, $eventClassName);
-            }
-        };
     }
 }
 

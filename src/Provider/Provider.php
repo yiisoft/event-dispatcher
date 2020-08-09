@@ -11,15 +11,20 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  * ```php
  * $provider = new Yiisoft\EventDispatcher\Provider\Provider();
  *
- * // adding some listeners
+ * // add some listeners
  * $provider->attach(function (AfterDocumentProcessed $event) {
  *    $document = $event->getDocument();
  *    // do something with document
  * });
+ *
+ * // lock provider when done
+ * $provider->lock();
  * ```
  */
-final class Provider extends AbstractProviderConfigurator implements ListenerProviderInterface
+final class Provider implements ListenerProviderInterface
 {
+    private bool $locked = false;
+
     /**
      * @var callable[]
      */
@@ -46,8 +51,12 @@ final class Provider extends AbstractProviderConfigurator implements ListenerPro
      * @param callable $listener
      * @param string $eventClassName
      */
-    protected function attach(callable $listener, string $eventClassName = ''): void
+    public function attach(callable $listener, string $eventClassName = ''): void
     {
+        if ($this->locked) {
+            throw new \RuntimeException('Can not attach more event listeners. Provider is locked.');
+        }
+
         if ($eventClassName === '') {
             $eventClassName = $this->getParameterType($listener);
         }
@@ -178,5 +187,14 @@ final class Provider extends AbstractProviderConfigurator implements ListenerPro
                 yield from $this->listeners[$eventClassName];
             }
         }
+    }
+
+    /**
+     * Lock provider so no listeners could be attached.
+     * It is useful to prevent adding event listeners runtime.
+     */
+    public function lock(): void
+    {
+        $this->locked = true;
     }
 }

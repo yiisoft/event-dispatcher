@@ -24,11 +24,12 @@ to events dispatched.
 - Simple and lightweight.
 - Encourages designing event hierarchy.
 - Can combine multiple event listener providers.
+- Has locking capability to prevent adding event listeners after configuration is done.
 
 ### General usage
 
 The library consists of two parts: event dispatcher and event listener provider. Provider's job is to register listeners
-for a certain event type. Dispatcher's job is to take an event, get a listeners for it from a provider and call them sequentially.
+for a certain event type. Dispatcher's job is to take an event, get listeners for it from a provider and call them sequentially.
 
 ```php
 $provider = new Yiisoft\EventDispatcher\Provider\Provider();
@@ -39,31 +40,13 @@ $provider->attach(function (AfterDocumentProcessed $event) {
     $document = $event->getDocument();
     // do something with document
 });
+
+// lock provider to prevent adding more listeners
+$provider->lock();
 ```
-Attaching events is only allowed from configuration or friendly classes(the ones extending from [AbstractProvideConfigurator](https://github.com/yiisoft/event-dispatcher/blob/master/src/Provider/AbstractProviderConfigurator.php)). 
-Example:
 
-```php
-class ProviderConfigurator extends AbstractProviderConfigurator
-{
-    private Provider $provider;
-
-    public function __construct(Provider $provider)
-    {
-        $this->provider = $provider;
-    }
-
-    public function attach(callable $listener, string $eventClassName = ''): void
-    {
-        $this->provider->attach($listener, $eventClassName);
-    }
-}
-
-$configurator = new ProviderConfigurator(new Provider());
-$configurator->attach(function (Event $event) {
-    // do nothing
-});
-```
+It is a good idea to configure a provider only at application configuration stage. We are calling `lock()` to prevent
+further event attaching.
 
 The event dispatching may look like:
 
@@ -157,10 +140,10 @@ In that case, it is advised to use the aggregate (see above) if you need feature
 in this library.
 
 ```php
-$provider = new Yiisoft\EventDispatcher\Provider\ConcreteProvider();
-$provider->attach(SomeEvent::class, function () {
+$provider = new Yiisoft\EventDispatcher\Provider\Provider();
+$provider->attach(static function () {
     // this function does not need an event object as argument
-});
+}, SomeEvent::class);
 ```
 
 ### Unit testing
