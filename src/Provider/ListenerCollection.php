@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Yiisoft\EventDispatcher\Provider;
 
 /**
