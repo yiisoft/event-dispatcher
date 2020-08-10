@@ -28,41 +28,18 @@ to events dispatched.
 ### General usage
 
 The library consists of two parts: event dispatcher and event listener provider. Provider's job is to register listeners
-for a certain event type. Dispatcher's job is to take an event, get a listeners for it from a provider and call them sequentially.
+for a certain event type. Dispatcher's job is to take an event, get listeners for it from a provider and call them sequentially.
 
 ```php
-$provider = new Yiisoft\EventDispatcher\Provider\Provider();
+// add some listeners
+$listeners = (new \Yiisoft\EventDispatcher\Provider\ListenerCollection())
+    ->add(function (AfterDocumentProcessed $event) {
+        $document = $event->getDocument();
+        // do something with document
+    });
+
+$provider = new Yiisoft\EventDispatcher\Provider\Provider($listeners);
 $dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($provider);
-
-// adding some listeners
-$provider->attach(function (AfterDocumentProcessed $event) {
-    $document = $event->getDocument();
-    // do something with document
-});
-```
-Attaching events is only allowed from configuration or friendly classes(the ones extending from [AbstractProvideConfigurator](https://github.com/yiisoft/event-dispatcher/blob/master/src/Provider/AbstractProviderConfigurator.php)). 
-Example:
-
-```php
-class ProviderConfigurator extends AbstractProviderConfigurator
-{
-    private Provider $provider;
-
-    public function __construct(Provider $provider)
-    {
-        $this->provider = $provider;
-    }
-
-    public function attach(callable $listener, string $eventClassName = ''): void
-    {
-        $this->provider->attach($listener, $eventClassName);
-    }
-}
-
-$configurator = new ProviderConfigurator(new Provider());
-$configurator->attach(function (Event $event) {
-    // do nothing
-});
 ```
 
 The event dispatching may look like:
@@ -120,7 +97,7 @@ With the interface above listening to all document-related events could be done 
 
 
 ```php
-$provider->attach(function (DocumentEvent $event) {
+$listeners->add(function (DocumentEvent $event) {
     // log events here
 });
 ```
@@ -132,8 +109,8 @@ In case you want to combine multiple listener providers, you can use `CompositeP
 ```php
 $compositeProvider = new Yiisoft\EventDispatcher\Provider\CompositeProvider();
 $provider = new Yiisoft\EventDispatcher\Provider\Provider();
-$compositeProvider->attach($provider);
-$compositeProvider->attach(new class implements ListenerProviderInterface {
+$compositeProvider->add($provider);
+$compositeProvider->add(new class implements ListenerProviderInterface {
     public function getListenersForEvent(object $event): iterable
     {
         yield function ($event) {
@@ -157,10 +134,10 @@ In that case, it is advised to use the aggregate (see above) if you need feature
 in this library.
 
 ```php
-$provider = new Yiisoft\EventDispatcher\Provider\ConcreteProvider();
-$provider->attach(SomeEvent::class, function () {
+$listeners = (new \Yiisoft\EventDispatcher\Provider\ListenerCollection())
+    ->add(static function () {
     // this function does not need an event object as argument
-});
+}, SomeEvent::class);
 ```
 
 ### Unit testing
