@@ -67,11 +67,6 @@ final class ListenerCollection
     private function getParameterType(callable $callable): string
     {
         // This try-catch is only here to keep OCD linters happy about uncaught reflection exceptions.
-
-        if (!is_callable($callable)) {
-            throw new \InvalidArgumentException('Not a recognized type of callable');
-        }
-
         try {
             $closure = new \ReflectionFunction(\Closure::fromCallable($callable));
             $params = $closure->getParameters();
