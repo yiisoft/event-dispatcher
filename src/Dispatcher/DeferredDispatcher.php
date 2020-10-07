@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Yiisoft\EventDispatcher\Dispatcher;
-
 
 use Psr\EventDispatcher\EventDispatcherInterface;
 
