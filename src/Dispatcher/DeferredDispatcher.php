@@ -14,10 +14,10 @@ final class DeferredDispatcher implements EventDispatcherInterface
         $this->dispatcher = $dispatcher;
     }
 
-
     public function dispatch(object $event)
     {
         $this->events[] = $event;
+        return $event;
     }
 
     public function flush(): void
