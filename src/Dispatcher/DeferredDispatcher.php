@@ -27,5 +27,6 @@ final class DeferredDispatcher implements EventDispatcherInterface
         foreach ($this->events as $event) {
             $this->dispatcher->dispatch($event);
         }
+        $this->events = [];
     }
 }
