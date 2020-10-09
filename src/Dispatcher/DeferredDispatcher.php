@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Yiisoft\EventDispatcher\Dispatcher;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -22,11 +20,14 @@ final class DeferredDispatcher implements EventDispatcherInterface
         return $event;
     }
 
-    public function flush(): void
+    public function flush(): array
     {
+        $dispatchedEvents = [];
         foreach ($this->events as $event) {
-            $this->dispatcher->dispatch($event);
+            $dispatchedEvents[] = $this->dispatcher->dispatch($event);
         }
+
         $this->events = [];
+        return $dispatchedEvents;
     }
 }

@@ -13,9 +13,7 @@ final class DeferredDispatcherTest extends TestCase
     public function testEventIsNotDispatchedImmediately(): void
     {
         $deferredDispatcher = $this->getDeferredDispatcher();
-
-        $event = new Event();
-        $deferredDispatcher->dispatch($event);
+        $event = $deferredDispatcher->dispatch(new Event());
 
         $this->assertEquals([], $event->registered());
     }
@@ -24,15 +22,13 @@ final class DeferredDispatcherTest extends TestCase
     {
         $deferredDispatcher = $this->getDeferredDispatcher();
 
-        $event1 = new Event();
-        $event2 = new Event();
+        $deferredDispatcher->dispatch(new Event());
+        $deferredDispatcher->dispatch(new Event());
 
-        $deferredDispatcher->dispatch($event1);
-        $deferredDispatcher->dispatch($event2);
+        [$event1, $event2] = $deferredDispatcher->flush();
+        $secondFlushResult = $deferredDispatcher->flush();
 
-        $deferredDispatcher->flush();
-        $deferredDispatcher->flush();
-
+        $this->assertEmpty($secondFlushResult);
         $this->assertEquals(['triggered'], $event1->registered());
         $this->assertEquals(['triggered'], $event2->registered());
     }
