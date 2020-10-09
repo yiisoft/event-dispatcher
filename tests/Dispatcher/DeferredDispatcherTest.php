@@ -42,7 +42,7 @@ final class DeferredDispatcherTest extends TestCase
         $provider = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function (Event $event) {
+                yield static function (Event $event) {
                     $event->register('triggered');
                 };
             }
