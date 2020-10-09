@@ -24,6 +24,7 @@ to events dispatched.
 - Simple and lightweight.
 - Encourages designing event hierarchy.
 - Can combine multiple event listener providers.
+- Provides deferred dispatcher for decorating regular dispatcher and postponing triggering events.
 
 ### General usage
 
@@ -138,6 +139,24 @@ $listeners = (new \Yiisoft\EventDispatcher\Provider\ListenerCollection())
     ->add(static function () {
     // this function does not need an event object as argument
 }, SomeEvent::class);
+```
+
+### Deferred dispatcher
+
+For some cases, such as aggregates or transactions, it is required to defer dispatching events.
+You can achieve it by using `DeferredDispatcher`:
+
+```php
+use Yiisoft\EventDispatcher\Dispatcher\DeferredDispatcher;
+
+$deferredDispatcher = new DeferredDispatcher($dispatcher);
+
+$transaction->start();
+$deferredDispatcher->dispatch(new Event1());
+$deferredDispatcher->dispatch(new Event2());
+if ($transaction->isOk()) {
+    $deferredDispatcher->flush();
+}
 ```
 
 ### Unit testing
