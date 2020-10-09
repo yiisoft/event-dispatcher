@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Yiisoft\EventDispatcher\Tests\Dispatcher;
-
 
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\ListenerProviderInterface;
