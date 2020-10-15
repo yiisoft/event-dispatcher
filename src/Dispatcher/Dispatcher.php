@@ -26,14 +26,10 @@ final class Dispatcher implements EventDispatcherInterface
                 return $event;
             }
 
-            $this->handle($event, $listener);
+            $spoofableEvent = $event;
+            $listener($spoofableEvent);
         }
 
         return $event;
-    }
-
-    private function handle(object $event, callable $listener)
-    {
-        $listener($event);
     }
 }
