@@ -25,9 +25,15 @@ final class Dispatcher implements EventDispatcherInterface
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 return $event;
             }
-            $listener($event);
+
+            $this->handle($event, $listener);
         }
 
         return $event;
+    }
+
+    private function handle(object $event, callable $listener)
+    {
+        $listener($event);
     }
 }
