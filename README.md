@@ -168,7 +168,6 @@ final class Entity
     public function changeBody(string $body): void
     {
         $this->body = $body;
-
         $this->recordEvent(new EntityModified());
     }
 }
