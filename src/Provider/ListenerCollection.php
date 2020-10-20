@@ -12,7 +12,7 @@ namespace Yiisoft\EventDispatcher\Provider;
 final class ListenerCollection
 {
     /**
-     * @var callable[]
+     * @var callable[][]
      */
     private array $listeners = [];
 
