@@ -18,14 +18,15 @@ to events dispatched.
 [![static analysis](https://github.com/yiisoft/event-dispatcher/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/event-dispatcher/actions?query=workflow%3A%22static+analysis%22)
 
 
-### Features
+## Features
 
 - [PSR-14](http://www.php-fig.org/psr/psr-14/) compatible.
 - Simple and lightweight.
 - Encourages designing event hierarchy.
 - Can combine multiple event listener providers.
+- `DefferedEventsTrait` for use in entites and aggregates.
 
-### General usage
+## General usage
 
 The library consists of two parts: event dispatcher and event listener provider. Provider's job is to register listeners
 for a certain event type. Dispatcher's job is to take an event, get listeners for it from a provider and call them sequentially.
@@ -140,6 +141,46 @@ $listeners = (new \Yiisoft\EventDispatcher\Provider\ListenerCollection())
 }, SomeEvent::class);
 ```
 
+### Use deffered events trait
+
+Add `DeferredEventsTrait` to your entity. Save created events via method `recordEvent` and
+get events for send to events dispatcher via method `releaseEvents` (after call `releaseEvents` events in entity cleared).
+
+For example:
+
+```php
+final class Entity
+{
+    use DeferredEventsTrait;
+
+    private string $body = '';
+
+    public function __construct()
+    {
+        $this->recordEvent(new EntityCreated());
+    }
+
+    public function getBody(): string
+    {
+        return $this->body;
+    }
+
+    public function changeBody(string $body): void
+    {
+        $this->body = $body;
+
+        $this->recordEvent(new EntityModified());
+    }
+}
+
+$entity = new Entity();
+foreach ($entity->releaseEvents() as $event) {
+    $dispatcher->dispatch($event);
+}
+```
+
+## Testing
+
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
@@ -158,12 +199,18 @@ The package tests are checked with [Infection](https://infection.github.io/) mut
 
 ### Static analysis
 
-The code is statically analyzed with [Phan](https://github.com/phan/phan/wiki). To run static analysis:
+The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
 
 ```php
-./vendor/bin/phan
+./vendor/bin/psalm
 ```
+## License
 
-### Credits
+The Yii Event Dispatcher is free software. It is released under the terms of the BSD License.
+Please see [`LICENSE`](./LICENSE.md) for more information.
+
+Maintained by [Yii Software](https://www.yiiframework.com/).
+
+## Credits
 
 - Larry Garfield (@crell) for initial implementation of deriving callable parameter type.
