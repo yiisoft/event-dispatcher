@@ -60,4 +60,28 @@ class DispatcherTest extends TestCase
 
         $this->assertEquals([1], $event->registered());
     }
+
+    public function testEventSpoofing()
+    {
+        $event = new Event();
+        $provider = new class() implements ListenerProviderInterface {
+            public function getListenersForEvent(object $event): iterable
+            {
+                yield function (Event $event) {
+                    $event->register(1);
+                };
+                yield function (Event &$event) {
+                    $event = new Event();
+                };
+                yield function (Event $event) {
+                    $event->register(2);
+                };
+            }
+        };
+
+        $dispatcher = new Dispatcher($provider);
+        $dispatcher->dispatch($event);
+
+        $this->assertEquals([1, 2], $event->registered());
+    }
 }

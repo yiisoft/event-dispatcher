@@ -25,7 +25,9 @@ final class Dispatcher implements EventDispatcherInterface
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 return $event;
             }
-            $listener($event);
+
+            $spoofableEvent = $event;
+            $listener($spoofableEvent);
         }
 
         return $event;
