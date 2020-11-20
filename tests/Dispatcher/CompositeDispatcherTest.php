@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\EventDispatcher\Tests\Dispatcher;
 
 use PHPUnit\Framework\TestCase;

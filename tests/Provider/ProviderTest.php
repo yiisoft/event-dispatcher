@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\EventDispatcher\Tests\Provider;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
 use Yiisoft\EventDispatcher\Provider\Provider;
+use Yiisoft\EventDispatcher\Tests\Event\ClassInterface;
 use Yiisoft\EventDispatcher\Tests\Event\ClassItself;
 use Yiisoft\EventDispatcher\Tests\Event\Event;
 use Yiisoft\EventDispatcher\Tests\Event\ParentClass;
 use Yiisoft\EventDispatcher\Tests\Event\ParentInterface;
-use Yiisoft\EventDispatcher\Tests\Event\ClassInterface;
 use Yiisoft\EventDispatcher\Tests\Listener\Invokable;
 use Yiisoft\EventDispatcher\Tests\Listener\NonStatic;
 use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
@@ -100,7 +102,7 @@ final class ProviderTest extends TestCase
         $this->assertEquals(
             [
                 'class itself',
-                'parent class'
+                'parent class',
             ],
             $classHierarchyHandlers
         );
