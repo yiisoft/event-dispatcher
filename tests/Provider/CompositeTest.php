@@ -18,8 +18,8 @@ class CompositeTest extends TestCase
         $provider1 = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function (Event $event) {
-                    $event->register(1);
+                yield static function (Event $event) {
+                    $event->register('1');
                 };
             }
         };
@@ -27,8 +27,8 @@ class CompositeTest extends TestCase
         $provider2 = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function (Event $event) {
-                    $event->register(2);
+                yield static function (Event $event) {
+                    $event->register('2');
                 };
             }
         };
@@ -41,6 +41,6 @@ class CompositeTest extends TestCase
         foreach ($aggregate->getListenersForEvent($event) as $listener) {
             $listener($event);
         }
-        $this->assertEquals([1, 2], $event->registered());
+        $this->assertEquals(['1', '2'], $event->registered());
     }
 }

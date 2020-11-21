@@ -19,14 +19,14 @@ class DispatcherTest extends TestCase
         $provider = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function (Event $event) {
-                    $event->register(1);
+                yield static function (Event $event) {
+                    $event->register('1');
                 };
-                yield function (Event $event) {
-                    $event->register(2);
+                yield static function (Event $event) {
+                    $event->register('2');
                 };
-                yield function (Event $event) {
-                    $event->register(3);
+                yield static function (Event $event) {
+                    $event->register('3');
                 };
             }
         };
@@ -34,7 +34,7 @@ class DispatcherTest extends TestCase
         $dispatcher = new Dispatcher($provider);
         $dispatcher->dispatch($event);
 
-        $this->assertEquals([1, 2, 3], $event->registered());
+        $this->assertEquals(['1', '2', '3'], $event->registered());
     }
 
     public function testPropagationStops(): void
@@ -44,15 +44,15 @@ class DispatcherTest extends TestCase
         $provider = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function (StoppableEvent $event) {
-                    $event->register(1);
+                yield static function (StoppableEvent $event) {
+                    $event->register('1');
                     $event->stopPropagation();
                 };
-                yield function (StoppableEvent $event) {
-                    $event->register(2);
+                yield static function (StoppableEvent $event) {
+                    $event->register('2');
                 };
-                yield function (StoppableEvent $event) {
-                    $event->register(3);
+                yield static function (StoppableEvent $event) {
+                    $event->register('3');
                 };
             }
         };
@@ -60,23 +60,23 @@ class DispatcherTest extends TestCase
         $dispatcher = new Dispatcher($provider);
         $dispatcher->dispatch($event);
 
-        $this->assertEquals([1], $event->registered());
+        $this->assertEquals(['1'], $event->registered());
     }
 
-    public function testEventSpoofing()
+    public function testEventSpoofing(): void
     {
         $event = new Event();
         $provider = new class() implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
-                yield function (Event $event) {
-                    $event->register(1);
+                yield static function (Event $event) {
+                    $event->register('1');
                 };
-                yield function (Event &$event) {
+                yield static function (Event &$event) {
                     $event = new Event();
                 };
-                yield function (Event $event) {
-                    $event->register(2);
+                yield static function (Event $event) {
+                    $event->register('2');
                 };
             }
         };
@@ -84,6 +84,6 @@ class DispatcherTest extends TestCase
         $dispatcher = new Dispatcher($provider);
         $dispatcher->dispatch($event);
 
-        $this->assertEquals([1, 2], $event->registered());
+        $this->assertEquals(['1', '2'], $event->registered());
     }
 }
