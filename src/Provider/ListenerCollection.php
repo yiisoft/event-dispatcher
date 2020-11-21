@@ -18,6 +18,7 @@ final class ListenerCollection
 
     /**
      * @param string ...$eventClassNames
+     *
      * @return iterable<callable>
      */
     public function getForEvents(string ...$eventClassNames): iterable
@@ -42,6 +43,7 @@ final class ListenerCollection
      *
      * @param callable $listener
      * @param string $eventClassName
+     *
      * @return self
      */
     public function add(callable $listener, string $eventClassName = ''): self
@@ -62,6 +64,7 @@ final class ListenerCollection
      * @suppress PhanUndeclaredMethod
      *
      * @param callable $callable The callable for which we want the parameter type.
+     *
      * @return string The interface the parameter is type hinted on.
      */
     private function getParameterType(callable $callable): string

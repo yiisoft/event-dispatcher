@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\EventDispatcher\Dispatcher;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -8,6 +10,7 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 /**
  * Dispatcher executes listeners attached to event passed
+ *
  * @see https://www.php-fig.org/psr/psr-14/
  */
 final class Dispatcher implements EventDispatcherInterface
