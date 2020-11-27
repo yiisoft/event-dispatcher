@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\EventDispatcher\Support;
 
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
 use Yiisoft\Injector\Injector;
