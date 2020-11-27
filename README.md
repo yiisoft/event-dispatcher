@@ -140,6 +140,37 @@ $listeners = (new \Yiisoft\EventDispatcher\Provider\ListenerCollection())
 }, SomeEvent::class);
 ```
 
+### Advanced listeners declaration
+If you're using a DI container, you can use the `Yiisoft\EventDispatcher\Support\ListenerCollectionFactory`. It is designed to make creation of `ListenerCollection`s more simple and straightforward. It uses the `\Psr\Container\ContainerInterface` and [yiisoft/injector](https://github.com/yiisoft/injector) inside to resolve event listeners in runtime. This means you can create a simpler event listener configuration:
+- A regular callable:
+    ```php
+    fn (EventName $event) => someStuff($event)
+   ```
+- A regular callable with additional dependencies:
+    ```php
+    fn (EventName $event, DependencyClass $dependency) => $dependency->someStuff($event)
+    ```
+  The `yiisoft/injector` will resolve the dependency in this case.
+- Static method call from a class:
+    ```php
+    [SomeClass::class, 'methodName']
+    ```
+  In this case event dispatcher will call `SomeClass::methodName($event)` with method dependency resolving via the `yiisoft/injector`.
+- Non-static method in a class:
+    ```php
+    [SomeClass::class, 'methodName']
+    ```
+    `SomeClass` object will be retrieved from a DI container with dependency resolving. Then the event dispatcher will call `$someClass->methodName($event)` with method dependency resolving via the `yiisoft/injector`.
+    
+All the dependency resolving is done in a lazy way: dependencies will not be resolved before the corresponding event will happen.
+
+### DI configuration
+You can see a config example in the [config directory](config):
+- [common.php](config/common.php) contains the configuration for the PSR-14 interfaces
+- [console.php](config/console.php) and [web.php](config/web.php) contains the configuration for the `ListenerCollectionFactory`.
+
+All these configs will be used automatically in projects with the [yiisoft/composer-config-plugin](https://github.com/yiisoft/composer-config-plugin).
+
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:

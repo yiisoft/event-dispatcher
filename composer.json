@@ -20,7 +20,10 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4|^8.0",
-        "psr/event-dispatcher": "1.0.0"
+        "psr/container": "^1.0",
+        "psr/event-dispatcher": "1.0.0",
+        "yiisoft/friendly-exception": "^1.0",
+        "yiisoft/injector": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.4",
@@ -43,6 +46,20 @@
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
+        },
+        "config-plugin": {
+            "common": "config/common.php",
+            "console": "config/console.php",
+            "events": "config/events.php",
+            "events-web": [
+                "$events",
+                "config/events-web.php"
+            ],
+            "events-console": [
+                "$events",
+                "config/events-console.php"
+            ],
+            "web": "config/web.php"
         }
     },
     "config": {
