@@ -153,7 +153,7 @@ If you're using a DI container, you can use the `Yiisoft\EventDispatcher\Support
   The `yiisoft/injector` will resolve the dependency in this case.
 - Static method call from a class:
     ```php
-    [SomeClass::class, 'methodName']
+    [SomeClass::class, 'staticMethodName']
     ```
   In this case event dispatcher will call `SomeClass::methodName($event)` with method dependency resolving via the `yiisoft/injector`.
 - Non-static method in a class:
