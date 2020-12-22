@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\EventDispatcher\Support;
 
 use Psr\Container\ContainerInterface;
+use ReflectionMethod;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
 use Yiisoft\Injector\Injector;
 
@@ -47,8 +48,11 @@ final class ListenerCollectionFactory
 
             foreach ($listeners as $callable) {
                 $listener = function (object $event) use ($callable) {
-                    if (!is_callable($callable) && is_array($callable) && !is_object($callable[0])) {
-                        $callable = [$this->container->get($callable[0]), $callable[1]];
+                    if (is_array($callable) && !is_object($callable[0])) {
+                        $reflection = new ReflectionMethod($callable[0], $callable[1]);
+                        if (!$reflection->isStatic()) {
+                            $callable = [$this->container->get($callable[0]), $callable[1]];
+                        }
                     }
 
                     return $this->injector->invoke($callable, [$event]);
