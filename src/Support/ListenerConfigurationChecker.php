@@ -17,6 +17,12 @@ final class ListenerConfigurationChecker
     }
 
     /**
+     * Checks the given event configuration and throws an exception in some cases:
+     * - incorrect configuration format
+     * - incorrect listener format
+     * - listener is not a callable
+     * - listener is meant to be a method of an object which can't be instantiated
+     *
      * @param array $configuration An array in format of [eventClassName => [listeners]]
      *
      * @psalm-suppress InvalidCatch
