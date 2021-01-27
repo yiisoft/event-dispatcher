@@ -36,11 +36,11 @@ final class ListenerConfigurationChecker
                 );
             }
 
-            if (!is_array($listeners)) {
+            if (!is_iterable($listeners)) {
                 $type = gettype($listeners);
 
                 throw new InvalidEventConfigurationFormatException(
-                    "Event listeners for $eventName must be an array, $type given."
+                    "Event listeners for $eventName must be an iterable, $type given."
                 );
             }
 
