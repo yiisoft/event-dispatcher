@@ -16,6 +16,11 @@ final class ListenerConfigurationChecker
         $this->container = $container;
     }
 
+    /**
+     * @param array $configuration An array in format of [eventClassName => [listeners]]
+     *
+     * @psalm-suppress InvalidCatch
+     */
     public function check(array $configuration): void
     {
         foreach ($configuration as $eventName => $listeners) {
