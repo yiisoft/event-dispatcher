@@ -19,8 +19,8 @@ class InvalidEventConfigurationFormatException extends InvalidArgumentException 
         return <<<SOLUTION
             EventConfigurator accepts an array in the following format:
                 [
-                    'eventName1' => [\$listener1, \$listener2, ...],
-                    'eventName2' => [\$listener3, \$listener4, ...],
+                    'eventClassName1' => [\$listener1, \$listener2, ...],
+                    'eventClassName2' => [\$listener3, \$listener4, ...],
                     ...
                 ]
         SOLUTION;

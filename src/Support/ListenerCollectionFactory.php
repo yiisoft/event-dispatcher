@@ -22,8 +22,6 @@ final class ListenerCollectionFactory
 
     /**
      * @param array $eventListeners Event listener list in format ['eventName1' => [$listener1, $listener2, ...]]
-     * @param bool $precheck If true, all the listeners will be checked strictly if they are valid callables
-     *                       before attaching to the ListenerCollection
      *
      * @return ListenerCollection
      */
@@ -32,17 +30,17 @@ final class ListenerCollectionFactory
         $listenerCollection = new ListenerCollection();
 
         foreach ($eventListeners as $eventName => $listeners) {
-            if (!is_string($eventName)) {
+            if (!is_string($eventName) || !class_exists($eventName)) {
                 throw new InvalidEventConfigurationFormatException(
                     'Incorrect event listener format. Format with event name must be used.'
                 );
             }
 
-            if (!is_array($listeners)) {
+            if (!is_iterable($listeners)) {
                 $type = gettype($listeners);
 
                 throw new InvalidEventConfigurationFormatException(
-                    "Event listeners for $eventName must be an array, $type given."
+                    "Event listeners for $eventName must be an iterable, $type given."
                 );
             }
 
