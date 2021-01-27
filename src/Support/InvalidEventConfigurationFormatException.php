@@ -16,11 +16,11 @@ class InvalidEventConfigurationFormatException extends InvalidArgumentException 
 
     public function getSolution(): ?string
     {
-        return <<<SOLUTION
+        return <<<'SOLUTION'
             EventConfigurator accepts an array in the following format:
                 [
-                    'eventClassName1' => [\$listener1, \$listener2, ...],
-                    'eventClassName2' => [\$listener3, \$listener4, ...],
+                    'eventClassName1' => [$listener1, $listener2, ...],
+                    'eventClassName2' => [$listener3, $listener4, ...],
                     ...
                 ]
         SOLUTION;

@@ -16,7 +16,7 @@ class InvalidListenerConfigurationException extends InvalidArgumentException imp
 
     public function getSolution(): ?string
     {
-        return <<<SOLUTION
+        return <<<'SOLUTION'
             Event listener has incorrect configuration. To meet EventConfigurator requirements a listener should be one of:
             - A closure.
             - [object, method] array.
