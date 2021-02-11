@@ -11,7 +11,7 @@ class InvalidListenerConfigurationException extends InvalidArgumentException imp
 {
     public function getName(): string
     {
-        return 'Invalid event listener configuration';
+        return 'Invalid event listener configuration.';
     }
 
     public function getSolution(): ?string

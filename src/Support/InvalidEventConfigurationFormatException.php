@@ -11,7 +11,7 @@ class InvalidEventConfigurationFormatException extends InvalidArgumentException 
 {
     public function getName(): string
     {
-        return 'Configuration format passed to EventConfigurator is invalid';
+        return 'Configuration format passed to EventConfigurator is invalid.';
     }
 
     public function getSolution(): ?string

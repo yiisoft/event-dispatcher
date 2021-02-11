@@ -8,6 +8,9 @@ use Psr\Container\ContainerInterface;
 use ReflectionMethod;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
 use Yiisoft\Injector\Injector;
+use function is_array;
+use function is_object;
+use function is_string;
 
 final class ListenerCollectionFactory
 {

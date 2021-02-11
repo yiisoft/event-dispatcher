@@ -6,6 +6,9 @@ namespace Yiisoft\EventDispatcher\Support;
 
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use function is_array;
+use function is_callable;
+use function is_string;
 
 final class ListenerConfigurationChecker
 {
