@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
+use function get_class;
 
 /**
  * Provider is a listener provider that registers event listeners for interfaces used in callable type-hints

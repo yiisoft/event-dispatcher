@@ -7,6 +7,9 @@ namespace Yiisoft\EventDispatcher\Dispatcher;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
+/**
+ * Delegates dispatching an event to one or more dispatchers.
+ */
 final class CompositeDispatcher implements EventDispatcherInterface
 {
     /**

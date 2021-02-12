@@ -15,6 +15,8 @@ use Yiisoft\EventDispatcher\Tests\Event\ParentInterface;
 use Yiisoft\EventDispatcher\Tests\Listener\Invokable;
 use Yiisoft\EventDispatcher\Tests\Listener\NonStatic;
 use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
+use function array_slice;
+use function iterator_to_array;
 
 final class ProviderTest extends TestCase
 {
@@ -41,7 +43,7 @@ final class ProviderTest extends TestCase
     public function testAttachClosure(): void
     {
         $listeners = (new ListenerCollection())
-            ->add(function (Event $event) {
+            ->add(static function (Event $event) {
                 // do nothing
             });
 
@@ -130,7 +132,7 @@ final class ProviderTest extends TestCase
         $provider = new Provider($listeners);
         $listeners = $provider->getListenersForEvent(new Event());
 
-        $listeners = \iterator_to_array($listeners, false);
+        $listeners = iterator_to_array($listeners, false);
         $this->assertCount(1, $listeners);
         $this->assertContains($listener, $listeners);
     }

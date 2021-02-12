@@ -17,9 +17,11 @@ final class ListenerCollection
     private array $listeners = [];
 
     /**
-     * @param string ...$eventClassNames
+     * Get listeners for event class names specified.
      *
-     * @return iterable<callable>
+     * @param string ...$eventClassNames Event class names.
+     *
+     * @return iterable<callable> Listeners.
      */
     public function getForEvents(string ...$eventClassNames): iterable
     {

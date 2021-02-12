@@ -9,7 +9,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
 /**
- * Dispatcher executes listeners attached to event passed
+ * Dispatcher executes listeners attached to event passed.
  *
  * @see https://www.php-fig.org/psr/psr-14/
  */

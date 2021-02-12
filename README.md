@@ -31,11 +31,11 @@ The library consists of two parts: event dispatcher and event listener provider.
 for a certain event type. Dispatcher's job is to take an event, get listeners for it from a provider and call them sequentially.
 
 ```php
-// add some listeners
+// Add some listeners.
 $listeners = (new \Yiisoft\EventDispatcher\Provider\ListenerCollection())
     ->add(function (AfterDocumentProcessed $event) {
         $document = $event->getDocument();
-        // do something with document
+        // Do something with document.
     });
 
 $provider = new Yiisoft\EventDispatcher\Provider\Provider($listeners);
@@ -45,12 +45,20 @@ $dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($provider);
 The event dispatching may look like:
 
 ```php
-class DocumentProcessor
+use Psr\EventDispatcher\EventDispatcherInterface;
+
+final class DocumentProcessor
 {
+    private EventDispatcherInterface $eventDispatcher;
+    
+    public function __construct(EventDispatcherInterface $eventDispatcher) {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     public function process(Document $document)
     {
-        // process the document
-        $dispatcher->dispatch(new AfterDocumentProcessed($document));
+        // Process the document, then dispatch completion event.
+        $this->eventDispatcher->dispatch(new AfterDocumentProcessed($document));
     }
 }
 ```
@@ -60,7 +68,7 @@ class DocumentProcessor
 Event could be made stoppable by implementing `Psr\EventDispatcher\StoppableEventInterface`:
 
 ```php
-class BusyEvent implements Psr\EventDispatcher\StoppableEventInterface
+final class BusyEvent implements Psr\EventDispatcher\StoppableEventInterface
 {
     // ...
 
@@ -84,11 +92,11 @@ interface DocumentEvent
 {
 }
 
-class BeforeDocumentProcessed implements DocumentEvent
+final class BeforeDocumentProcessed implements DocumentEvent
 {
 }
 
-class AfterDocumentProcessed implements DocumentEvent
+final class AfterDocumentProcessed implements DocumentEvent
 {
 }
 ```
@@ -126,8 +134,8 @@ $dispatcher = new Yiisoft\EventDispatcher\Dispatcher\Dispatcher($compositeProvid
 
 You may use a more simple listener provider, which allows you to specify which event they can provide.
 
-It can be useful in some specific cases, for instance if one of your listeners does not need the event 
-object passed as a parameter (can happen if the listener only needs to run at a specific stage during 
+It can be useful in some specific cases, for instance if one of your listeners does not need the event
+object passed as a parameter (can happen if the listener only needs to run at a specific stage during
 runtime, but does not need event data).
 
 In that case, it is advised to use the aggregate (see above) if you need features from both providers included
@@ -138,6 +146,42 @@ $listeners = (new \Yiisoft\EventDispatcher\Provider\ListenerCollection())
     ->add(static function () {
     // this function does not need an event object as argument
 }, SomeEvent::class);
+```
+
+### Dispatching to multiple dispatchers
+
+There may be a need to dispatch an event via multiple dispatchers at once. It could be achieved like the following:
+
+```php
+use Yiisoft\EventDispatcher\Dispatcher\CompositeDispatcher;
+use Yiisoft\EventDispatcher\Dispatcher\Dispatcher;
+use Yiisoft\EventDispatcher\Provider\ListenerCollection;
+use Yiisoft\EventDispatcher\Provider\Provider;
+
+// Add some listeners.
+$listeners1 = (new ListenerCollection())
+    ->add(function (AfterDocumentProcessed $event) {
+        $document = $event->getDocument();
+        // Do something with document.
+    });
+
+$provider1 = new Provider($listeners1);
+
+// Add some listeners.
+$listeners2 = (new ListenerCollection())
+    ->add(function (AfterDocumentProcessed $event) {
+        $document = $event->getDocument();
+        // Do something with document.
+    });
+
+$provider2 = new Provider($listeners2);
+
+
+$dispatcher = new CompositeDispatcher();
+$dispatcher->attach(new Dispatcher($provider1));
+$dispatcher->attach(new Dispatcher($provider2));
+
+$dispatcher->dispatch(new MyEvent());
 ```
 
 ### Unit testing

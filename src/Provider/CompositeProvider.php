@@ -24,7 +24,7 @@ final class CompositeProvider implements ListenerProviderInterface
     }
 
     /**
-     * Adds provider as a source for event listeners
+     * Adds provider as a source for event listeners.
      *
      * @param ListenerProviderInterface $provider
      */
