@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\EventDispatcher\Provider;
 
+use Closure;
+use InvalidArgumentException;
+use ReflectionFunction;
+
 /**
  * Listener collection stores listeners and is used to configure provider.
  *
@@ -63,28 +67,19 @@ final class ListenerCollection
     /**
      * Derives the interface type of the first argument of a callable.
      *
-     * @suppress PhanUndeclaredMethod
-     *
      * @param callable $callable The callable for which we want the parameter type.
      *
      * @return string The interface the parameter is type hinted on.
      */
     private function getParameterType(callable $callable): string
     {
-        // This try-catch is only here to keep OCD linters happy about uncaught reflection exceptions.
-        try {
-            $closure = new \ReflectionFunction(\Closure::fromCallable($callable));
-            $params = $closure->getParameters();
+        $closure = new ReflectionFunction(Closure::fromCallable($callable));
+        $params = $closure->getParameters();
 
-            $reflectedType = isset($params[0]) ? $params[0]->getType() : null;
-            if ($reflectedType === null) {
-                throw new \InvalidArgumentException('Listeners must declare an object type they can accept.');
-            }
-            $type = $reflectedType->getName();
-        } catch (\ReflectionException $e) {
-            throw new \RuntimeException('Type error registering listener.', 0, $e);
+        $reflectedType = isset($params[0]) ? $params[0]->getType() : null;
+        if ($reflectedType === null) {
+            throw new InvalidArgumentException('Listeners must declare an object type they can accept.');
         }
-
-        return $type;
+        return $reflectedType->getName();
     }
 }

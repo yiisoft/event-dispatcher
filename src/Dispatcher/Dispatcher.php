@@ -24,6 +24,7 @@ final class Dispatcher implements EventDispatcherInterface
 
     public function dispatch(object $event): object
     {
+        /** @var callable $listener */
         foreach ($this->listenerProvider->getListenersForEvent($event) as $listener) {
             if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 return $event;

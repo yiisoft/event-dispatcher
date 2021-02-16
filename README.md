@@ -55,7 +55,7 @@ final class DocumentProcessor
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function process(Document $document)
+    public function process(Document $document): void
     {
         // Process the document, then dispatch completion event.
         $this->eventDispatcher->dispatch(new AfterDocumentProcessed($document));
@@ -105,7 +105,7 @@ With the interface above listening to all document-related events could be done 
 
 
 ```php
-$listeners->add(function (DocumentEvent $event) {
+$listeners->add(static function (DocumentEvent $event) {
     // log events here
 });
 ```
@@ -116,12 +116,12 @@ In case you want to combine multiple listener providers, you can use `CompositeP
 
 ```php
 $compositeProvider = new Yiisoft\EventDispatcher\Provider\CompositeProvider();
-$provider = new Yiisoft\EventDispatcher\Provider\Provider();
+$provider = new Yiisoft\EventDispatcher\Provider\Provider($listeners);
 $compositeProvider->add($provider);
 $compositeProvider->add(new class implements ListenerProviderInterface {
     public function getListenersForEvent(object $event): iterable
     {
-        yield function ($event) {
+        yield static function ($event) {
             // handle 
         };
     }

@@ -7,6 +7,7 @@ namespace Yiisoft\EventDispatcher\Tests\Dispatcher;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
+use stdClass;
 use Yiisoft\EventDispatcher\Dispatcher\CompositeDispatcher;
 
 class CompositeDispatcherTest extends TestCase
@@ -16,7 +17,7 @@ class CompositeDispatcherTest extends TestCase
         $dispatcher1 = $this->createTransparentDispatcher();
         $dispatcher2 = $this->createTransparentDispatcher();
 
-        $event = new \stdClass();
+        $event = new stdClass();
         $compositeDispatcher = new CompositeDispatcher();
         $compositeDispatcher->attach($dispatcher1);
         $compositeDispatcher->attach($dispatcher2);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\EventDispatcher\Tests\Provider;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
 use Yiisoft\EventDispatcher\Provider\Provider;
@@ -115,11 +116,10 @@ final class ProviderTest extends TestCase
 
     public function testListenerWithNoParameterThrowsException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Listeners must declare an object type they can accept.');
 
-        $listeners = (new ListenerCollection())
-            ->add(fn () => null);
+        (new ListenerCollection())->add(fn () => null);
     }
 
     public function testListenerForEventIsReturned(): void
