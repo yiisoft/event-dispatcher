@@ -7,6 +7,7 @@ namespace Yiisoft\EventDispatcher\Provider;
 use Closure;
 use InvalidArgumentException;
 use ReflectionFunction;
+use ReflectionNamedType;
 
 /**
  * Listener collection stores listeners and is used to configure provider.
@@ -80,6 +81,7 @@ final class ListenerCollection
         if ($reflectedType === null) {
             throw new InvalidArgumentException('Listeners must declare an object type they can accept.');
         }
+        /** @var ReflectionNamedType $reflectedType */
         return $reflectedType->getName();
     }
 }
