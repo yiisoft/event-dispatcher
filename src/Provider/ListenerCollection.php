@@ -73,7 +73,7 @@ final class ListenerCollection
      *
      * @param callable $callable The callable for which we want the parameter type.
      *
-     * @return string[] The interfaces the parameter is type hinted on.
+     * @return string[] Interfaces the parameter is type hinted on.
      */
     private function getParameterType(callable $callable): array
     {
