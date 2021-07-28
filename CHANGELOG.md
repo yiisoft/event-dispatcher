@@ -1,5 +1,10 @@
 # Yii Event Dispatcher Change Log
 
+
+## 1.0.2 under development
+
+- no changes in this release.
+
 ## 1.0.1 July 28, 2021
 
 - Bug #62: Support listeners for events defined with union types (vjik)
