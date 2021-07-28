@@ -15,6 +15,7 @@ final class ListenerCollectionTest extends TestCase
             ->add(static function (string|int $var): void {
             });
 
-        $this->assertCount(1, $listenerCollection->getForEvents('string|int'));
+        $this->assertCount(1, $listenerCollection->getForEvents('string'));
+        $this->assertCount(1, $listenerCollection->getForEvents('int'));
     }
 }

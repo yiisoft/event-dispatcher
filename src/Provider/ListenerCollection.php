@@ -50,19 +50,21 @@ final class ListenerCollection
      * Any callable could be used be it a closure, invokable object or array referencing a class or object.
      *
      * @param callable $listener
-     * @param string $eventClassName
+     * @param string ...$eventClassName
      *
      * @return self
      */
-    public function add(callable $listener, string $eventClassName = ''): self
+    public function add(callable $listener, string ...$eventClassNames): self
     {
         $new = clone $this;
 
-        if ($eventClassName === '') {
-            $eventClassName = $this->getParameterType($listener);
+        if ($eventClassNames === []) {
+            $eventClassNames = $this->getParameterType($listener);
         }
 
-        $new->listeners[$eventClassName][] = $listener;
+        foreach ($eventClassNames as $eventClassName) {
+            $new->listeners[$eventClassName][] = $listener;
+        }
         return $new;
     }
 
@@ -71,9 +73,9 @@ final class ListenerCollection
      *
      * @param callable $callable The callable for which we want the parameter type.
      *
-     * @return string The interface the parameter is type hinted on.
+     * @return string[] The interfaces the parameter is type hinted on.
      */
-    private function getParameterType(callable $callable): string
+    private function getParameterType(callable $callable): array
     {
         $closure = new ReflectionFunction(Closure::fromCallable($callable));
         $params = $closure->getParameters();
@@ -81,16 +83,15 @@ final class ListenerCollection
         $reflectedType = isset($params[0]) ? $params[0]->getType() : null;
 
         if ($reflectedType instanceof ReflectionNamedType) {
-            return $reflectedType->getName();
+            return [$reflectedType->getName()];
         }
 
         if ($reflectedType instanceof ReflectionUnionType) {
-            return implode(
-                '|',
-                array_map(
-                    static fn(ReflectionNamedType $type) => $type->getName(),
-                    $reflectedType->getTypes()
-                )
+            /** @var ReflectionNamedType[] */
+            $types = $reflectedType->getTypes();
+            return array_map(
+                static fn(ReflectionNamedType $type) => $type->getName(),
+                $types
             );
         }
 
