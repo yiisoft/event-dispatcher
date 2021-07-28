@@ -36,7 +36,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\EventDispatcher\\Tests\\": "tests"
+            "Yiisoft\\EventDispatcher\\Tests\\": "tests/common",
+            "Yiisoft\\EventDispatcher\\Tests\\Php8\\": "tests/php8"
         }
     },
     "config": {

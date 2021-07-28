@@ -8,6 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use ReflectionFunction;
 use ReflectionNamedType;
+use ReflectionUnionType;
 
 /**
  * Listener collection stores listeners and is used to configure provider.
@@ -78,10 +79,21 @@ final class ListenerCollection
         $params = $closure->getParameters();
 
         $reflectedType = isset($params[0]) ? $params[0]->getType() : null;
-        if ($reflectedType === null) {
-            throw new InvalidArgumentException('Listeners must declare an object type they can accept.');
+
+        if ($reflectedType instanceof ReflectionNamedType) {
+            return $reflectedType->getName();
         }
-        /** @var ReflectionNamedType $reflectedType */
-        return $reflectedType->getName();
+
+        if ($reflectedType instanceof ReflectionUnionType) {
+            return implode(
+                '|',
+                array_map(
+                    static fn(ReflectionNamedType $type) => $type->getName(),
+                    $reflectedType->getTypes()
+                )
+            );
+        }
+
+        throw new InvalidArgumentException('Listeners must declare an object type they can accept.');
     }
 }
