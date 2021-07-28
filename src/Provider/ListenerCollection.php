@@ -90,7 +90,7 @@ final class ListenerCollection
             /** @var ReflectionNamedType[] */
             $types = $reflectedType->getTypes();
             return array_map(
-                static fn(ReflectionNamedType $type) => $type->getName(),
+                static fn (ReflectionNamedType $type) => $type->getName(),
                 $types
             );
         }
