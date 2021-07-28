@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
+
 use function get_class;
 
 /**
@@ -32,7 +33,7 @@ final class Provider implements ListenerProviderInterface
     public function getListenersForEvent(object $event): iterable
     {
         yield from $this->listeners->getForEvents(get_class($event));
-        yield from $this->listeners->getForEvents(...array_values(class_parents($event)));
-        yield from $this->listeners->getForEvents(...array_values(class_implements($event)));
+        yield from $this->listeners->getForEvents(...class_parents($event));
+        yield from $this->listeners->getForEvents(...class_implements($event));
     }
 }
