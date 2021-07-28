@@ -86,6 +86,7 @@ final class ListenerCollection
             return [$reflectedType->getName()];
         }
 
+        /** @psalm-suppress UndefinedClass,TypeDoesNotContainType */
         if ($reflectedType instanceof ReflectionUnionType) {
             /** @var ReflectionNamedType[] */
             $types = $reflectedType->getTypes();
