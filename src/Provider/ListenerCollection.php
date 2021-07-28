@@ -88,7 +88,7 @@ final class ListenerCollection
             return implode(
                 '|',
                 array_map(
-                    static fn(ReflectionNamedType $type) => $type->getName(),
+                    static fn (ReflectionNamedType $type) => $type->getName(),
                     $reflectedType->getTypes()
                 )
             );
