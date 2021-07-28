@@ -1,9 +1,8 @@
-# Yii Dependency Injection Change Log
-
+# Yii Event Dispatcher Change Log
 
 ## 1.0.1 under development
 
-- no changes in this release.
+- Bug #62: Add a support listeners with union type of event (vjik)
 
 ## 1.0.0 February 16, 2021
 
