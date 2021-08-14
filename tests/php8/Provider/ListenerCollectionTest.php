@@ -6,16 +6,18 @@ namespace Yiisoft\EventDispatcher\Tests\Php8\Provider;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
+use Yiisoft\EventDispatcher\Tests\Event\ParentClass;
+use Yiisoft\EventDispatcher\Tests\Event\StoppableEvent;
 
 final class ListenerCollectionTest extends TestCase
 {
     public function testAddCallableWithUnionType(): void
     {
         $listenerCollection = (new ListenerCollection())
-            ->add(static function (string|int $var): void {
+            ->add(static function (StoppableEvent|ParentClass $var): void {
             });
 
-        $this->assertCount(1, $listenerCollection->getForEvents('string'));
-        $this->assertCount(1, $listenerCollection->getForEvents('int'));
+        $this->assertCount(1, $listenerCollection->getForEvents(StoppableEvent::class));
+        $this->assertCount(1, $listenerCollection->getForEvents(ParentClass::class));
     }
 }
