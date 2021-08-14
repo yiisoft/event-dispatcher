@@ -114,14 +114,6 @@ final class ProviderTest extends TestCase
         $this->assertContains('parent interface', $interfaceHandlers);
     }
 
-    public function testListenerWithNoParameterThrowsException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Listeners must declare an object type they can accept.');
-
-        (new ListenerCollection())->add(fn () => null);
-    }
-
     public function testListenerForEventIsReturned(): void
     {
         $listener = fn () => null;
