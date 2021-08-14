@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\EventDispatcher\Tests\Provider;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\EventDispatcher\Provider\ListenerCollection;
 use Yiisoft\EventDispatcher\Provider\Provider;
