@@ -2,7 +2,7 @@
 
 ## 1.0.2 under development
 
-- Enh #64: Improve exception message on add listener to collection (vjik)
+- Enh #64: Improve exception message on adding listener to collection (vjik)
 
 ## 1.0.1 July 28, 2021
 
