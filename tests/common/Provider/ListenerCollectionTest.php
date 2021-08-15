@@ -33,7 +33,7 @@ class ListenerCollectionTest extends TestCase
         $listenerCollection = new ListenerCollection();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Listeners must declare an object type they can accept.');
+        $this->expectExceptionMessage('Listeners must accept an event object.');
         $listenerCollection->add(static function (): void {
         });
     }

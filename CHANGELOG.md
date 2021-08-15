@@ -1,9 +1,8 @@
 # Yii Event Dispatcher Change Log
 
-
 ## 1.0.2 under development
 
-- no changes in this release.
+- Enh #64: Improve exception message on adding listener to collection (vjik)
 
 ## 1.0.1 July 28, 2021
 

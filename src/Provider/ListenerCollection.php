@@ -50,7 +50,9 @@ final class ListenerCollection
      * Any callable could be used be it a closure, invokable object or array referencing a class or object.
      *
      * @param callable $listener
-     * @param string ...$eventClassName
+     * @param string ...$eventClassNames
+     *
+     * @throws InvalidArgumentException If callable is invalid.
      *
      * @return self
      */
@@ -73,6 +75,8 @@ final class ListenerCollection
      *
      * @param callable $callable The callable for which we want the parameter type.
      *
+     * @throws InvalidArgumentException If callable is invalid.
+     *
      * @return string[] Interfaces the parameter is type hinted on.
      */
     private function getParameterType(callable $callable): array
@@ -80,7 +84,11 @@ final class ListenerCollection
         $closure = new ReflectionFunction(Closure::fromCallable($callable));
         $params = $closure->getParameters();
 
-        $reflectedType = isset($params[0]) ? $params[0]->getType() : null;
+        if (isset($params[0])) {
+            $reflectedType = $params[0]->getType();
+        } else {
+            throw new InvalidArgumentException('Listeners must accept an event object.');
+        }
 
         if ($reflectedType instanceof ReflectionNamedType) {
             return [$reflectedType->getName()];
