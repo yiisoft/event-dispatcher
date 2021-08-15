@@ -75,7 +75,7 @@ final class ListenerCollection
      *
      * @param callable $callable The callable for which we want the parameter type.
      *
-     * @throws InvalidArgumentException If invalid callable.
+     * @throws InvalidArgumentException If callable is invalid.
      *
      * @return string[] Interfaces the parameter is type hinted on.
      */
@@ -87,7 +87,7 @@ final class ListenerCollection
         if (isset($params[0])) {
             $reflectedType = $params[0]->getType();
         } else {
-            throw new InvalidArgumentException('Listeners must accept the event object.');
+            throw new InvalidArgumentException('Listeners must accept an event object.');
         }
 
         if ($reflectedType instanceof ReflectionNamedType) {
