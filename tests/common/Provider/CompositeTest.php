@@ -15,7 +15,7 @@ class CompositeTest extends TestCase
     {
         $event = new Event();
 
-        $provider1 = new class() implements ListenerProviderInterface {
+        $provider1 = new class () implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield static function (Event $event) {
@@ -24,7 +24,7 @@ class CompositeTest extends TestCase
             }
         };
 
-        $provider2 = new class() implements ListenerProviderInterface {
+        $provider2 = new class () implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield static function (Event $event) {

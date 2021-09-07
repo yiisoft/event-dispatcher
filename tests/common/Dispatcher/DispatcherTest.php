@@ -16,7 +16,7 @@ class DispatcherTest extends TestCase
     {
         $event = new Event();
 
-        $provider = new class() implements ListenerProviderInterface {
+        $provider = new class () implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield static function (Event $event) {
@@ -41,7 +41,7 @@ class DispatcherTest extends TestCase
     {
         $event = new StoppableEvent();
 
-        $provider = new class() implements ListenerProviderInterface {
+        $provider = new class () implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield static function (StoppableEvent $event) {
@@ -66,7 +66,7 @@ class DispatcherTest extends TestCase
     public function testEventSpoofing(): void
     {
         $event = new Event();
-        $provider = new class() implements ListenerProviderInterface {
+        $provider = new class () implements ListenerProviderInterface {
             public function getListenersForEvent(object $event): iterable
             {
                 yield static function (Event $event) {
