@@ -53,8 +53,6 @@ final class ListenerCollection
      * @param string ...$eventClassNames
      *
      * @throws InvalidArgumentException If callable is invalid.
-     *
-     * @return self
      */
     public function add(callable $listener, string ...$eventClassNames): self
     {
