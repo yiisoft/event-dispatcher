@@ -23,16 +23,13 @@ use function get_class;
  */
 final class Provider implements ListenerProviderInterface
 {
-    private ListenerCollection $listeners;
-
-    public function __construct(ListenerCollection $listeners)
+    public function __construct(private ListenerCollection $listeners)
     {
-        $this->listeners = $listeners;
     }
 
     public function getListenersForEvent(object $event): iterable
     {
-        yield from $this->listeners->getForEvents(get_class($event));
+        yield from $this->listeners->getForEvents($event::class);
         /** @psalm-suppress MixedArgument */
         yield from $this->listeners->getForEvents(...array_values(class_parents($event)));
         /** @psalm-suppress MixedArgument */

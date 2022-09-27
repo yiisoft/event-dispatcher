@@ -60,10 +60,7 @@ class CompositeDispatcherTest extends TestCase
         $this->assertSame($stoppableEvent, $result);
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\EventDispatcher\EventDispatcherInterface
-     */
-    private function createTransparentDispatcher()
+    private function createTransparentDispatcher(): \PHPUnit\Framework\MockObject\MockObject|\Psr\EventDispatcher\EventDispatcherInterface
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher
