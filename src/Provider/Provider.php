@@ -6,8 +6,6 @@ namespace Yiisoft\EventDispatcher\Provider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 
-use function get_class;
-
 /**
  * Provider is a listener provider that registers event listeners for interfaces used in callable type-hints
  * and gives out a list of handlers by event interface provided for further use with Dispatcher.
