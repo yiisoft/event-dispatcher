@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\EventDispatcher\Tests\Dispatcher;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
@@ -60,7 +61,7 @@ class CompositeDispatcherTest extends TestCase
         $this->assertSame($stoppableEvent, $result);
     }
 
-    private function createTransparentDispatcher(): \PHPUnit\Framework\MockObject\MockObject|EventDispatcherInterface
+    private function createTransparentDispatcher(): MockObject|EventDispatcherInterface
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher
