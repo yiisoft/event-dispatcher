@@ -25,6 +25,10 @@ to events dispatched.
 - Encourages designing event hierarchy.
 - Can combine multiple event listener providers.
 
+## Requirements
+
+- PHP 8.0 or higher.
+
 ## Installation
 
 The package could be installed with composer:
