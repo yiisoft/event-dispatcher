@@ -1,9 +1,9 @@
 # Yii Event Dispatcher Change Log
 
-## 1.1.0 under development
+## 1.1.0 October 27, 2022
 
-- Enh #64: Improve exception message on adding listener to collection (@vjik)
 - Chg #69: Raise the minimum `PHP` version to `8.0` (@xepozz, @rustamwin)
+- Enh #64: Improve exception message on adding listener to collection (@vjik)
 
 ## 1.0.1 July 28, 2021
 
