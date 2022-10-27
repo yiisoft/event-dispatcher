@@ -1,5 +1,9 @@
 # Yii Event Dispatcher Change Log
 
+## 1.1.1 under development
+
+- no changes in this release.
+
 ## 1.1.0 October 27, 2022
 
 - Chg #69: Raise the minimum `PHP` version to `8.0` (@xepozz, @rustamwin)
