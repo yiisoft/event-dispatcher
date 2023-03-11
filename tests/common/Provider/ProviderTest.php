@@ -26,7 +26,7 @@ final class ProviderTest extends TestCase
             ->add([WithStaticMethod::class, 'handle']);
         $provider = new Provider($listeners);
 
-        $listeners = $provider->getListenersForEvent(new Event());
+        $listeners = iterator_to_array($provider->getListenersForEvent(new Event()));
         $this->assertCount(1, $listeners);
     }
 
@@ -36,7 +36,7 @@ final class ProviderTest extends TestCase
             ->add('Yiisoft\EventDispatcher\Tests\Provider\handle');
         $provider = new Provider($listeners);
 
-        $listeners = $provider->getListenersForEvent(new Event());
+        $listeners = iterator_to_array($provider->getListenersForEvent(new Event()));
         $this->assertCount(1, $listeners);
     }
 
@@ -49,7 +49,7 @@ final class ProviderTest extends TestCase
 
         $provider = new Provider($listeners);
 
-        $listeners = $provider->getListenersForEvent(new Event());
+        $listeners = iterator_to_array($provider->getListenersForEvent(new Event()));
         $this->assertCount(1, $listeners);
     }
 
@@ -60,7 +60,7 @@ final class ProviderTest extends TestCase
 
         $provider = new Provider($listeners);
 
-        $listeners = $provider->getListenersForEvent(new Event());
+        $listeners = iterator_to_array($provider->getListenersForEvent(new Event()));
         $this->assertCount(1, $listeners);
     }
 
@@ -71,7 +71,7 @@ final class ProviderTest extends TestCase
 
         $provider = new Provider($listeners);
 
-        $listeners = $provider->getListenersForEvent(new Event());
+        $listeners = iterator_to_array($provider->getListenersForEvent(new Event()));
         $this->assertCount(1, $listeners);
     }
 

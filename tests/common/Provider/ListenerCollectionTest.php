@@ -25,7 +25,7 @@ class ListenerCollectionTest extends TestCase
             ->add(static function (string $var): void {
             });
 
-        $this->assertCount(1, $listenerCollection->getForEvents('string'));
+        $this->assertCount(1, iterator_to_array($listenerCollection->getForEvents('string')));
     }
 
     public function testAddCallableWithoutParameter(): void
