@@ -15,6 +15,7 @@ use Yiisoft\EventDispatcher\Tests\Event\ParentInterface;
 use Yiisoft\EventDispatcher\Tests\Listener\Invokable;
 use Yiisoft\EventDispatcher\Tests\Listener\NonStatic;
 use Yiisoft\EventDispatcher\Tests\Listener\WithStaticMethod;
+
 use function array_slice;
 use function iterator_to_array;
 
