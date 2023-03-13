@@ -17,7 +17,7 @@ final class ListenerCollectionTest extends TestCase
             ->add(static function (StoppableEvent|ParentClass $var): void {
             });
 
-        $this->assertCount(1, $listenerCollection->getForEvents(StoppableEvent::class));
-        $this->assertCount(1, $listenerCollection->getForEvents(ParentClass::class));
+        $this->assertCount(1, iterator_to_array($listenerCollection->getForEvents(StoppableEvent::class)));
+        $this->assertCount(1, iterator_to_array($listenerCollection->getForEvents(ParentClass::class)));
     }
 }
