@@ -49,8 +49,6 @@ final class ListenerCollection
      *
      * Any callable could be used be it a closure, invokable object or array referencing a class or object.
      *
-     * @param callable $listener
-     * @param string ...$eventClassNames
      *
      * @throws InvalidArgumentException If callable is invalid.
      */
