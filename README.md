@@ -6,7 +6,7 @@
     <br>
 </p>
 
-[PSR-14](http://www.php-fig.org/psr/psr-14/) compatible event dispatcher provides an ability to dispatch events and listen
+[PSR-14](https://www.php-fig.org/psr/psr-14/) compatible event dispatcher provides an ability to dispatch events and listen
 to events dispatched.
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/event-dispatcher/v/stable.png)](https://packagist.org/packages/yiisoft/event-dispatcher)
@@ -20,7 +20,7 @@ to events dispatched.
 
 ## Features
 
-- [PSR-14](http://www.php-fig.org/psr/psr-14/) compatible.
+- [PSR-14](https://www.php-fig.org/psr/psr-14/) compatible.
 - Simple and lightweight.
 - Encourages designing event hierarchy.
 - Can combine multiple event listener providers.
