@@ -28,9 +28,13 @@ final class Provider implements ListenerProviderInterface
     public function getListenersForEvent(object $event): iterable
     {
         yield from $this->listeners->getForEvents($event::class);
-        /** @psalm-suppress MixedArgument */
+        /**
+         * @psalm-suppress PossiblyFalseArgument `$event` is object, so `class_parents()` never returns `false`.
+         */
         yield from $this->listeners->getForEvents(...array_values(class_parents($event)));
-        /** @psalm-suppress MixedArgument */
+        /**
+         * @psalm-suppress PossiblyFalseArgument `$event` is object, so `class_implements()` never returns `false`.
+         */
         yield from $this->listeners->getForEvents(...array_values(class_implements($event)));
     }
 }
