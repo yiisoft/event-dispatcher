@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
+use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([
+return RectorConfig::configure()
+    ->withPaths([
         __DIR__ . '/src',
         __DIR__ . '/tests',
+    ])
+    ->withPhpSets(php80: true)
+    ->withRules([
+        InlineConstructorDefaultToPropertyRector::class,
+    ])
+    ->withSkip([
+        ClosureToArrowFunctionRector::class,
     ]);
-
-    // register a single rule
-    $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
-
-    // define sets of rules
-    $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_80,
-    ]);
-};
