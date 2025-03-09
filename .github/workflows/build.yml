@@ -24,6 +24,8 @@ name: build
 jobs:
   phpunit:
     uses: yiisoft/actions/.github/workflows/phpunit.yml@master
+    secrets:
+      codecovToken: ${{ secrets.CODECOV_TOKEN }}
     with:
       os: >-
         ['ubuntu-latest', 'windows-latest']
