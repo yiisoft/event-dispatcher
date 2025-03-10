@@ -28,16 +28,16 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "8.0 - 8.4",
         "psr/event-dispatcher": "1.0.0"
     },
     "require-dev": {
-        "maglnet/composer-require-checker": "^4.2",
-        "phpunit/phpunit": "^9.5",
-        "rector/rector": "^2.0.3",
-        "roave/infection-static-analysis-plugin": "^1.16",
-        "spatie/phpunit-watcher": "^1.23",
-        "vimeo/psalm": "^4.30|^5.8"
+        "maglnet/composer-require-checker": "^4.4",
+        "phpunit/phpunit": "^9.6.22",
+        "rector/rector": "^2.0.10",
+        "roave/infection-static-analysis-plugin": "^1.25",
+        "spatie/phpunit-watcher": "^1.23.6",
+        "vimeo/psalm": "^4.30 || ^5.26.1 || ^6.8.8"
     },
     "provide": {
         "psr/event-dispatcher-implementation": "1.0.0"
@@ -55,6 +55,7 @@
     },
     "config": {
         "sort-packages": true,
+        "bump-after-update": "dev",
         "allow-plugins": {
             "infection/extension-installer": true,
             "composer/package-versions-deprecated": true
