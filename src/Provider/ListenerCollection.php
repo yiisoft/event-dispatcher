@@ -72,7 +72,7 @@ final class ListenerCollection
     /**
      * Adds listeners from attributes defined in the target object.
      */
-    public function addListenersFromAttributes(object $target): void
+    public function addFromAttributes(object $target): void
     {
         $reflection = new ReflectionObject($target);
         $attributes = $reflection->getAttributes(AttributeHandler::class, ReflectionAttribute::IS_INSTANCEOF);
