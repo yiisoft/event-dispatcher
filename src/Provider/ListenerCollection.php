@@ -6,9 +6,13 @@ namespace Yiisoft\EventDispatcher\Provider;
 
 use Closure;
 use InvalidArgumentException;
+use ReflectionAttribute;
 use ReflectionFunction;
 use ReflectionNamedType;
+use ReflectionObject;
+use ReflectionProperty;
 use ReflectionUnionType;
+use Yiisoft\EventDispatcher\Handler\AttributeHandler;
 
 /**
  * Listener collection stores listeners and is used to configure provider.
@@ -66,6 +70,38 @@ final class ListenerCollection
     }
 
     /**
+     * Adds listeners from attributes defined in the target object.
+     */
+    public function addListenersFromAttributes(object $target): void
+    {
+        $reflection = new ReflectionObject($target);
+        $attributes = $reflection->getAttributes(AttributeHandler::class, ReflectionAttribute::IS_INSTANCEOF);
+
+        foreach ($attributes as $attribute) {
+            /** @var AttributeHandler $handler */
+            $handler = $attribute->newInstance();
+            $this->add(Closure::fromCallable([$handler, 'handle']), ...$handler->getHandledEvents());
+        }
+
+        $properties = $reflection->getProperties(
+            ReflectionProperty::IS_PRIVATE
+            | ReflectionProperty::IS_PROTECTED
+            | ReflectionProperty::IS_PUBLIC
+        );
+
+        foreach ($properties as $property) {
+            $attributes = $property->getAttributes(AttributeHandler::class, ReflectionAttribute::IS_INSTANCEOF);
+
+            foreach ($attributes as $attribute) {
+                /** @var AttributeHandler $handler */
+                $handler = $attribute->newInstance();
+                $handler->setPropertyNames([$property->getName()]);
+                $this->add(Closure::fromCallable([$handler, 'handle']), ...$handler->getHandledEvents());
+            }
+        }
+    }
+
+    /**
      * Derives the interface type of the first argument of a callable.
      *
      * @param callable $callable The callable for which we want the parameter type.
@@ -91,7 +127,7 @@ final class ListenerCollection
 
         /** @psalm-suppress UndefinedClass,TypeDoesNotContainType */
         if ($reflectedType instanceof ReflectionUnionType) {
-            /** @var ReflectionNamedType[] */
+            /** @var ReflectionNamedType[] $types */
             $types = $reflectedType->getTypes();
             return array_map(
                 static fn (ReflectionNamedType $type) => $type->getName(),
