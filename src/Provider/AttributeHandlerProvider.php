@@ -10,7 +10,6 @@ use Closure;
  * Abstract class for event handlers provider based on class attributes.
  *
  * Each handler can be associated with one or more property names.
- * Handlers will only be applied to events related to the specified properties.
  *
  * To use this class, extend it and implement the `getEventHandlers()` method to return an array
  * mapping event class names to their corresponding handler closures.
