@@ -18,7 +18,7 @@ final class AttributeListenersProvider
      *
      * @psalm-param class-string $targetClass
      */
-    public static function getListenersFromAttributes(string $targetClass): ListenerCollection
+    public function getListenersFromAttributes(string $targetClass): ListenerCollection
     {
         $reflection = new ReflectionClass($targetClass);
         $attributes = $reflection->getAttributes(AttributeHandlerProvider::class, ReflectionAttribute::IS_INSTANCEOF);
