@@ -107,7 +107,7 @@ final class ProviderTest extends TestCase
                 'class itself',
                 'parent class',
             ],
-            $classHierarchyHandlers
+            $classHierarchyHandlers,
         );
 
         $this->assertContains('class interface', $interfaceHandlers);
@@ -116,7 +116,7 @@ final class ProviderTest extends TestCase
 
     public function testListenerForEventIsReturned(): void
     {
-        $listener = fn () => null;
+        $listener = fn() => null;
 
         $listeners = (new ListenerCollection())
             ->add($listener, Event::class);
