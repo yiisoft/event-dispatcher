@@ -14,8 +14,7 @@ final class ListenerCollectionTest extends TestCase
     public function testAddCallableWithUnionType(): void
     {
         $listenerCollection = (new ListenerCollection())
-            ->add(static function (StoppableEvent|ParentClass $var): void {
-            });
+            ->add(static function (StoppableEvent|ParentClass $var): void {});
 
         $this->assertCount(1, iterator_to_array($listenerCollection->getForEvents(StoppableEvent::class)));
         $this->assertCount(1, iterator_to_array($listenerCollection->getForEvents(ParentClass::class)));

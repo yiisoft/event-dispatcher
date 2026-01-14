@@ -14,16 +14,14 @@ class ListenerCollectionTest extends TestCase
     public function testAddIsImmutable(): void
     {
         $listenerCollection = new ListenerCollection();
-        $newInstance = $listenerCollection->add(static function () {
-        }, Event::class);
+        $newInstance = $listenerCollection->add(static function () {}, Event::class);
         $this->assertNotSame($newInstance, $listenerCollection);
     }
 
     public function testAdd(): void
     {
         $listenerCollection = (new ListenerCollection())
-            ->add(static function (string $var): void {
-            });
+            ->add(static function (string $var): void {});
 
         $this->assertCount(1, iterator_to_array($listenerCollection->getForEvents('string')));
     }
@@ -34,8 +32,7 @@ class ListenerCollectionTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Listeners must accept an event object.');
-        $listenerCollection->add(static function (): void {
-        });
+        $listenerCollection->add(static function (): void {});
     }
 
     public function testAddCallableWithParameterWithoutTypeHint(): void
@@ -44,7 +41,6 @@ class ListenerCollectionTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Listeners must declare an object type they can accept.');
-        $listenerCollection->add(static function ($var): void {
-        });
+        $listenerCollection->add(static function ($var): void {});
     }
 }

@@ -21,9 +21,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  */
 final class Provider implements ListenerProviderInterface
 {
-    public function __construct(private ListenerCollection $listeners)
-    {
-    }
+    public function __construct(private ListenerCollection $listeners) {}
 
     public function getListenersForEvent(object $event): iterable
     {
