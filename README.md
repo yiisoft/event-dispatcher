@@ -38,7 +38,7 @@ composer require yiisoft/event-dispatcher
 
 ## General usage
 
-> Note: For usage with Yii3 see [yiisoft/yii-event](https://github.com/yiisoft/yii-event) and [the guide](https://github.com/yiisoft/docs/blob/master/guide/en/concept/events.md).
+> Note: For usage with Yii3 see [yiisoft/yii-event](https://github.com/yiisoft/yii-event) and [the guide](https://yiisoft.github.io/docs/guide/concept/events).
 
 The library consists of two parts: event dispatcher and event listener provider. Provider's job is to register listeners
 for a certain event type. Dispatcher's job is to take an event, get listeners for it from a provider and call them sequentially.
