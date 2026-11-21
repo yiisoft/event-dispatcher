@@ -1,0 +1,6 @@
+parameters:
+    level: max
+    paths:
+        - src
+    stubFiles:
+        - phpstan/stubs/ListenerProviderInterface.stub
