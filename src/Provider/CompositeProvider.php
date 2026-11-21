@@ -16,6 +16,9 @@ final class CompositeProvider implements ListenerProviderInterface
      */
     private array $providers = [];
 
+    /**
+     * @return iterable<callable> Event listeners.
+     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->providers as $provider) {

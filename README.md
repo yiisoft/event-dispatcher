@@ -12,7 +12,6 @@
 [![Code Coverage](https://codecov.io/gh/yiisoft/event-dispatcher/branch/master/graph/badge.svg)](https://codecov.io/gh/yiisoft/event-dispatcher)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https://badge-api.stryker-mutator.io/github.com/yiisoft/event-dispatcher/master)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/event-dispatcher/master)
 [![static analysis](https://github.com/yiisoft/event-dispatcher/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/event-dispatcher/actions?query=workflow%3A%22static+analysis%22)
-[![type-coverage](https://shepherd.dev/github/yiisoft/event-dispatcher/coverage.svg)](https://shepherd.dev/github/yiisoft/event-dispatcher)
 
 [PSR-14](https://www.php-fig.org/psr/psr-14/) compatible event dispatcher provides an ability to dispatch events and listen
 to events dispatched.
