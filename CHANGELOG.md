@@ -1,5 +1,9 @@
 # Yii Event Dispatcher Change Log
 
+## 1.1.2 under development
+
+- no changes in this release.
+
 ## 1.1.1 November 21, 2026
 
 - Chg #110, #129: Change PHP constraint in `composer.json` to `8.0 - 8.6` (@vjik)
