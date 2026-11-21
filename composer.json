@@ -28,7 +28,7 @@
         }
     ],
     "require": {
-        "php": "8.0 - 8.4",
+        "php": "8.0 - 8.6",
         "psr/event-dispatcher": "1.0.0"
     },
     "require-dev": {

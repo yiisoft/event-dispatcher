@@ -25,7 +25,7 @@ to events dispatched.
 
 ## Requirements
 
-- PHP 8.0 or higher.
+- PHP 8.0 - 8.6.
 
 ## Installation
 
