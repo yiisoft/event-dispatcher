@@ -24,4 +24,4 @@ jobs:
       os: >-
         ['ubuntu-latest']
       php: >-
-        ['8.6']
+        ['8.5']
