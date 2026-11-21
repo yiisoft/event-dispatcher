@@ -5,6 +5,7 @@ on:
     paths: &paths
       - 'src/**'
       - 'phpstan.neon'
+      - 'phpstan/stubs/**'
       - 'composer.json'
       - '.github/workflows/static.yml'
   push:
