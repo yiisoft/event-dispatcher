@@ -1,6 +1,6 @@
 # Yii Event Dispatcher Change Log
 
-## 1.1.1 under development
+## 1.1.1 November 21, 2026
 
 - Chg #110, #129: Change PHP constraint in `composer.json` to `8.0 - 8.6` (@vjik)
 - Chg #128: Replace Psalm with PHPStan (@vjik)
